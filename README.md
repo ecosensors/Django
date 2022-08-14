@@ -1,6 +1,6 @@
 # Django notes
 
-## Créé un environement
+## Create un environement
 $ python3 -m venv .env
 
 ## Install django
