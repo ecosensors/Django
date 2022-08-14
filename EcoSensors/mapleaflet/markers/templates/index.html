@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Markers</title>
+</head>
+<body>
+<ul>
+{% for marker in markers_list %}
+    <li>
+        {{ marker.id }} - {{ marker.name }}: {{ marker.location }}
+    </li>
+{% endfor %}
+</ul>
+</body>
+</html>

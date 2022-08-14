@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+<title xmlns="http://www.w3.org/1999/html">Sensors by Station</title>
+{% endblock %}
+
+{% block slider %}
+<div>
+
+     {% if fields_list %}
+        <h4>Terrains</h4>
+        <ul>
+            {% for field in fields_list %}
+            <li>
+                <a href="{% url 'map:field' field.id_field %}">({{ field.id_field}}){{ field.field_name}}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No fields are available.</p>
+    {% endif %}
+
+
+    {% if stations_list %}
+        <h4>Stations</h4>
+        <ul>
+            {% for station in stations_list %}
+            <li>
+                <a href="{% url 'map:station' station.fields_id_field station.id_station %}">
+                    [{{ station.id_station }}] {{ station.station_longname }} ({{ station.fields_id_field }})
+                </a>
+                <ul>
+                    {% for se in station.sondes  %}
+                    <li>
+                        <a href="{% url 'map:sensor' station.fields_id_field station.id_station se.id_sensor %}">
+                            {{ se.sensor_longname }}
+                        </a>
+                    </li>
+                    {% empty %}
+                    <li>Cette station ne contient pas de sondes</li>
+                    {% endfor %}
+                </ul>
+            </li>
+            {% endfor %}
+        </ul>
+
+    {% else %}
+        <p>No Station available.</p>
+    {% endif %}
+</div>
+{% endblock %}
+
+
+{% block content %}
+
+<div>
+        {% if station %}
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>{{ station.fields_id_field.field_name|capfirst }} &rarr; {{ station.station_longname }}</h3>
+                    <em>Toutes les sondes d'une staion</em>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if sensors %}
+
+            <div id="charts" data-chart="station" class="row gy-1">
+                {% for se in sensors %}
+                    <div class="col-md-6 p-2">
+                        <div class="container card sensor-{{ se.id_sensor}}" data-idsensor="{{ se.id_sensor}}">
+
+                            <div class="container-sensor">
+                                <canvas id="sensor-{{ se.id_sensor}}" class="canvas"></canvas>
+                            </div>
+
+
+                            <div class="card-body">
+                                <h5 class="card-title">{{ se.sensor_longname }}</h5>
+                                <p class="card-text">
+                                    Station: ({{ se.stations_id_station.id_station }}) {{ se.stations_id_station.station_longname }}</p>
+                                <p class="card-text">
+                                    Sensors ID: {{ se.id_sensor}}<br>
+                                    Créé le: {{ se.sensor_created }}<br>
+
+                                </p>
+                                <details>
+                                        <table>
+                                            <tr class="features" data-chart_fill="{{ se.chart_fill }}" data-chart_pointradius="{{ se.chart_pointRadius }}" data-chart_pointhoverradius="{{ se.chart_pointHoverRadius }}" data-showline="{{ se.chart_showLine }}" data-chart_borderwidth="{{ se.chart_borderWidth }}" data-chart_style="{{ se.chart_style_id_chart_style.chart_style_value }}" data-unit="{{ se.sensor_types_id_sensor_type.measure_unit }}" data-sensor_longname="{{ se.sensor_longname }}" data-backgroundcolor="{{ se.chart_backgroundColor_id_chart_backgroundColor.colors_id_colors.color_value }}" data-bordercolor="{{ se.chart_borderColor_id_chart_borderColor.colors_id_colors.color_value }}">
+                                                <th>Date</th><th>Value</th>
+                                            </tr>
+                                            {% for d in se.datas %}
+                                                <tr class="data" data-x="{{ d.measure_created|date:'Y-m-d H:i:s' }}" data-y="{{ d.value }}">
+                                                    <td class="data-x"><time>{{ d.measure_created }}</time></td><td class="data-y">{{ d.value }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </table>
+                                    </details>
+                            </div>
+                        </div>
+
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No stations are available or actived.</p>
+        {% endif %}
+</div>
+{% endblock %}
+

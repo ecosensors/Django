@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>EcoMap - (slider)</title>
+{% endblock %}
+
+{% block slider %}
+<div>
+
+    {% if fields_list %}
+        <h4>Terrains</h4>
+        <ul>
+            {% for field in fields_list %}
+            <li>
+                <a href="{% url 'map:field' field.id_field %}">({{ field.id_field}}){{ field.field_name}}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No fields are available.</p>
+    {% endif %}
+
+
+    {% if stations_list %}
+        <h4>Stations</h4>
+        <ul>
+            {% for station in stations_list %}
+            <li>
+                <a href="{% url 'map:station' station.id_station %}">{{ station.id_station }} ({{ station.station_longname }} ({{ station.fields_id_field.id_field }})</a>
+            </li>
+            {% endfor %}
+        </ul>
+
+    {% else %}
+        <p>No Station available.</p>
+    {% endif %}
+
+
+
+
+</div>
+{% endblock %}
+
+{% block maps %}
+<map id="map">Map</map>
+{% endblock %}

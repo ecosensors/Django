@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    <title>Sensors by Station</title>
+{% endblock %}
+
+{% block slider %}
+<div>
+
+     {% if fields_list %}
+        <h4>Terrains</h4>
+        <ul>
+            {% for field in fields_list %}
+            <li>
+                <a href="{% url 'map:field' field.id_field %}">({{ field.id_field}}){{ field.field_name}}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No fields are available.</p>
+    {% endif %}
+
+
+    {% if stations_list %}
+        <h4>Stations</h4>
+        <ul>
+            {% for station in stations_list %}
+            <li>
+                <a href="{% url 'map:station' station.fields_id_field station.id_station %}">
+                    [{{ station.id_station }}] {{ station.station_longname }} ({{ station.fields_id_field }})
+                </a>
+                <ul>
+                    {% for se in station.sondes  %}
+                    <li>
+                        <a href="{% url 'map:sensor' station.fields_id_field station.id_station se.id_sensor %}">
+                            {{ se.sensor_longname }}
+                        </a>
+                    </li>
+                    {% empty %}
+                    <li>Cette station ne contient pas de sondes</li>
+                    {% endfor %}
+                </ul>
+            </li>
+            {% endfor %}
+        </ul>
+
+    {% else %}
+        <p>No Station available.</p>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block content %}
+<div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>{{ station.station_longname|capfirst }} &rarr; {{ sensor.sensor_longname }}</h3>
+                    <em>Mesures d'une sonde</em>
+                </div>
+            </div>
+            <div id="charts" data-chart="sensor" class="row gy-3">
+                <div class="col-md-12 p-3">
+
+                    <div class="container card sensor">
+                            <div class="container-sensor">
+                                <canvas id="sensor" class="canvas"></canvas>
+                            </div>
+                            <div class="card-body">
+                                <details>
+                                    <table>
+                                        <tr class="features" data-chart_fill="{{ sensor.chart_fill }}" data-chart_pointradius="{{ sensor.chart_pointradius }}" data-chart_pointhoverradius="{{ sensor.chart_pointhoverradius }}" data-showline="{{ sensor.chart_showline }}" data-chart_borderwidth="{{ sensor.chart_borderwidth }}" data-chart_style="{{ sensor.chart_style_id_chart_style.chart_style_value }}" data-unit="{{ sensor.sensor_types_id_sensor_type.measure_unit }}" data-sensor_longname="{{ sensor.sensor_longname }}" data-backgroundcolor="{{ sensor.chart_backgroundcolor_id_chart_backgroundcolor.colors_id_colors.color_value }}" data-bordercolor="{{ sensor.chart_bordercolor_id_chart_bordercolor.colors_id_colors.color_value }}">
+                                            <th>Heure</th><th>Value</th><th>Collection id</th><th>Sensor ID</th><th>Measure ID</th>
+                                        </tr>
+                                        {% for se in sensor_measures %}
+                                        <tr class="data" data-x="{{ se.measure_created|date:'Y-m-d H:i:s' }}" data-y="{{ se.value }}">
+                                            <td class="data-x"><time>{{ se.measure_created }}</time></td><td class="data-y">{{ se.value }}</td>
+
+                                            <td>{{ se.collections_id_collection.id_collection }}</td><td>{{ se.sensors_id_sensor.id_sensor }}</td><td>{{ se.id_measure }}</td>
+                                        </tr>
+                                        {% empty %}
+                                        <tr>
+                                            <td colspan="5">Aucunes mesures durant cette période</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </table>
+                                </details>
+                            </div>
+                    </div>
+                </div>
+
+            </div>
+
+</div>
+{% endblock %}
+

@@ -1,0 +1,74 @@
+body{
+    background-color:#fff;
+    font-family: 'nunito', Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    color: #575962;
+}
+
+h1{
+    font-size: 1.5em;
+}
+h2{
+    font-size: 1.1em;
+}
+
+ul{
+    padding:0px;
+}
+li{
+    margin-left:15px;
+}
+
+table{
+    width:100%;
+}
+
+
+
+/* VUEJS */
+.activeButton{
+    border: 3px solid red !important;
+}
+.notActiveButton{
+    border: 3px solid green !important;
+}
+
+/* END VUEJS */
+
+
+
+.cont{
+/*
+    display: flex;
+    width: 100%;
+    */
+}
+
+
+.cont #slider, .cont #content{
+    /*
+    display: flex;
+    flex-wrap:nowrap;
+    */
+}
+
+#slider{
+    /*
+    flex: 0 0 38%;
+    max-width: 200px;
+    */
+    border-right: 1px solid #eee;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+}
+#content{
+    /*
+    flex: 1 1 1%;
+    */
+    border-bottom: 1px solid #eee;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    padding:20px;
+}
+*/
+

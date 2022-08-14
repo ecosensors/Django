@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>EcoMap - (slider)</title>
+{% endblock %}
+
+{% block slider %}
+<div>
+
+    {% if fields_list %}
+        <h4>Terrains</h4>
+        <ul>
+            {% for field in fields_list %}
+            <li>
+                <a href="{% url 'map:field' field.id_field %}">({{ field.id_field}}){{ field.field_name}}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No fields are available.</p>
+    {% endif %}
+
+
+    {% if stations_list %}
+        <h4>Stations</h4>
+        <ul>
+            {% for station in stations_list %}
+            <li>
+                <a href="{% url 'map:station' station.fields_id_field station.id_station %}">
+                    [{{ station.id_station }}] {{ station.station_longname }} ({{ station.sondes|length }})
+                </a>
+                <ul>
+                    {% for se in station.sondes  %}
+                    <li>
+                        <a href="{% url 'map:sensor' station.fields_id_field station.id_station se.id_sensor %}">
+                            [{{ se.id_sensor }}] {{ se.sensor_longname }}
+                        </a>
+                    </li>
+                    {% empty %}
+                    <li>Cette station ne contient pas de sondes</li>
+                    {% endfor %}
+                </ul>
+            </li>
+            {% endfor %}
+        </ul>
+
+    {% else %}
+        <p>No Station available.</p>
+    {% endif %}
+
+
+
+
+</div>
+{% endblock %}
+
+{% block map %}
+    <div id="map"></div>
+{% endblock %}
+
+{% block content %}
+            <h1>Exercice avec Vuejs</h1>
+            <div id="v_app">
+
+                    <station :bestseller="bestSellerProduct"></station>
+                    <station></station>
+
+                    <!--
+                    <h2>[{ title }] </h2>
+                    <button v-on:click="showImage()" v-bind:class="[displayImage ? 'activeButton' : 'notActiveButton']">Show image</button>
+                    <button v-on:click="hideImage()" v-bind:class="[displayImage ? 'notActiveButton' : 'activeButton']">Hide image</button>
+                    <button @mouseover="showImage()">On Over Show image</button>
+                    <button @mouseover="hideImage()">On Over Hide image</button>
+                    <figure v-show="displayImage">
+                        <img class="img-fluid rounded" v-bind:src="image" v-bind:alt="station_name"/>
+                        <figcaption>[{ station_name }] [{ station_lat }], [{ station_lng }] alt: [{ station_alt }]</figcaption>
+                    </figure>
+                    <ul>
+                        <li v-for="sonde in sondes">[{ sonde.name }] [{ sonde.unit }]</li>
+                    </ul>
+                    -->
+
+
+            </div>
+{% endblock %}
