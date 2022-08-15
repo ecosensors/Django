@@ -20,6 +20,6 @@ from .models import Stations
 
 class StationsSerializer(serializers.GeoFeatureModelSerializer):
     class Meta:
-        fields = ("id_station", "station_name", "station_lat", "station_lng")
+        fields = ("id_station", "station_name", "station_longname", "station_lat", "station_lng")
         geo_field = "location"
         model = Stations

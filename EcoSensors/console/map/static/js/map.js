@@ -2,13 +2,6 @@
 * Leaflet
 */
 
-
-/*
-const attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-const map = L.map('map')
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: attribution }).addTo(map);
-map.fitWorld();
-*/
 /*
 // Project 1
 const attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -27,12 +20,22 @@ map.fitBounds(feature.getBounds(), { padding: [100, 100] });
 const copy = "© <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors";
 const url = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
 const osm = L.tileLayer(url, { attribution: copy });
-const map = L.map("map", { layers: [osm] });
+latlng = L.latLng(46.184610, 6.008253);
+const map = L.map("map", {center: latlng, zoom: 15, layers: [osm] });
+console.log("getBounds: ",map.getBounds().toBBoxString())
+
+var markers = L.markerClusterGroup({
+    spiderfyOnMaxZoom: false,
+    showCoverageOnHover: false,
+    zoomToBoundsOnClick: false
+});
+
+/*
 map.
     locate() // Try to locate the user position
     .on("locationfound", (e) => map.setView(e.latlng, 8))
     .on("locationerror", () => map.setView([46.184610, 6.008253], 13)); // If not found, diplay taht position
-
+*/
 
 async function load_markers() {
     const markers_url = `/api/map/?in_bbox=${map.getBounds().toBBoxString()}`;
@@ -47,9 +50,9 @@ async function load_markers() {
 async function render_markers() {
     const markers = await load_markers();
     console.log("Markers:",markers);
-    L.geoJSON(markers).addTo(map);
-    //.bindPopup((layer) => layer.feature.properties.name)
-
+    L.geoJSON(markers)
+    .bindPopup((layer) => layer.feature.properties.station_longname)
+    .addTo(map);
 }
 
 map.on("moveend", render_markers);
