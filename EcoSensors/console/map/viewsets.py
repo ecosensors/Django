@@ -1,4 +1,6 @@
 """Markers API views."""
+# Maps with Django (2)
+# https://www.paulox.net/2021/07/19/maps-with-django-part-2-geodjango-postgis-and-leaflet/
 from rest_framework import viewsets
 from rest_framework_gis import filters
 

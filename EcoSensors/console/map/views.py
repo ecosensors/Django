@@ -22,9 +22,6 @@ from .serializers import StationsSerializer
 from .models import Fields, Stations, Sensors, Measures, Collections
 
 
-#TODO: In the functions field, station, sensor, remove and merge the duplicated """ menu section """
-# into a new function
-
 def index(request): #Fields
     """
         Return the active fields as a menu.
@@ -165,8 +162,43 @@ def sensor(request, idfield, idstation, idsensor):
     #return HttpResponse(s_json, content_type='application/json')
     return render(request, 'map/sensor.html', context)
 
+def menu(fieldid):
+    """
+    Display all active fields
+    As a subtree, display all stations according to a selected field
+    As a subtree, display all sensors for a station
+    """
+    # Query the active fields
+    fields_list = Fields.objects.filter(field_active=1)  # Get all active fields
+
+    stations_list = []  # Initiate a list to store the stations according to the filed id
+    # Query the active station according to a selected field
+    for st in Stations.objects.filter(fields_id_field=fieldid, station_active=1):
+        a_stationsonde = {
+            'id_station': st.id_station,
+            'station_name': st.station_name,
+            'station_longname': st.station_longname,
+            'fields_id_field': st.fields_id_field.id_field,
+            'collection_id': '??',
+            'collation_date': '??',
+            'sondes': [],
+        }
+        # Query the active sensor according to a station id
+        for se in Sensors.objects.filter(stations_id_station=st.id_station, sensor_active=1):
+            a_stationsonde['sondes'].append({
+                'id_sensor': se.id_sensor,
+                'sensor_name': se.sensor_name,
+                'sensor_longname': se.sensor_longname
+            })
+        # Append a station information to the station list
+        stations_list.append(a_stationsonde)
+
+    return fields_list, stations_list
 
 
+"""
+The functions bellow are not used any more but I keep them as a record
+"""
 # DRF
 def api(request, idfield):
     '''
@@ -194,36 +226,11 @@ def api(request, idfield):
             # provide a Json Response with the necessary error information
         return JsonResponse(serializer.errors, status=400)
 
-def menu(fieldid):
-    """
-    Display all active fields
-    As a subtree, display all stations according to a selected field
-    As a subtree, display all sensors for a station
-    """
-    fields_list = Fields.objects.filter(field_active=1)  # Get all active fields
 
-    stations_list = []  # Initiate a list to store the stations according to the filed id
-    for st in Stations.objects.filter(fields_id_field=fieldid, station_active=1):
-        a_stationsonde = {
-            'id_station': st.id_station,
-            'station_name': st.station_name,
-            'station_longname': st.station_longname,
-            'fields_id_field': st.fields_id_field.id_field,
-            'collection_id': '??',
-            'collation_date': '??',
-            'sondes': [],
-        }
-
-        for se in Sensors.objects.filter(stations_id_station=st.id_station, sensor_active=1):
-            a_stationsonde['sondes'].append({
-                'id_sensor': se.id_sensor,
-                'sensor_name': se.sensor_name,
-                'sensor_longname': se.sensor_longname
-            })
-        stations_list.append(a_stationsonde)
-
-    return fields_list, stations_list
-
+"""
+Maps with Django (1)
+ https://www.paulox.net/2021/07/19/maps-with-django-part-2-geodjango-postgis-and-leaflet/
+"""
 #class MarkersMapView(TemplateView):
 #    """
 #        Display the markers following the part1 (Maps with Django (1))
