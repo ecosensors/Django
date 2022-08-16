@@ -5,7 +5,7 @@
 ### DocBlog
 This is a simple exercise to be fanilirized with Django (See DocBlog -> src )
 ### EcoSensor
-There is two exercises 1) leaflet and 2) Console. leaflet exercise is done following step by step [this tutorial](https://blog.logrocket.com/how-to-build-vue-js-app-django-rest-framework/). Then I used the new skills to build the console application with a database which contain a bit less than 1 million of measures. the console exercise is build with some javascript libraries as Leaflet for the map, Chartjs to display the measures. The goal of that exercise is to build a Django app to replace this PHP app ([See](https://bud.eco-sensors.ch/))
+There are two exercises 1) leaflet and 2) Console. leaflet exercise is done following [this tutorial](https://blog.logrocket.com/how-to-build-vue-js-app-django-rest-framework/), step by step. Then I used this new skills to build the console application with a database which contain a bit less than 1 million of measures. the console exercise is build with some javascript libraries as Leaflet for the map, Chartjs to display the measures. The goal of that exercise is to build a Django app to replace this PHP app ([See](https://bud.eco-sensors.ch/))
 
 
 # Django notes
@@ -25,7 +25,6 @@ $ python3 -m venv .env
 
 ## Create an application
 * (.env) ./manage.py startapp blog
-
 
 
 
