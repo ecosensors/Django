@@ -6,76 +6,40 @@ import json
 from django.core import serializers
 #from django.core.serializers import serialize
 
-
-
-#Django Rest Framework
+# DjJANGO REST FRAMEWORK
 # https://blog.logrocket.com/how-to-build-vue-js-app-django-rest-framework/
-# parsing data from the client
+## parsing data from the client
 from rest_framework.parsers import JSONParser
-# To bypass having a CSRF token
+## To bypass having a CSRF token
 from django.views.decorators.csrf import csrf_exempt
-# for sending response to the client
+## for sending response to the client
 from django.http import JsonResponse #, HttpResponse # Already import
-# API definition for task
+## API definition for task
 from .serializers import StationsSerializer
 
-
-
-from django.views.generic.base import TemplateView
+# from django.views.generic.base import TemplateView
 
 from .models import Fields, Stations, Sensors, Measures, Collections
 
-class MarkersMapView(TemplateView):
-    """Markers map view."""
-    template_name = "map/map.html"
-    def get_context_data(self, **kwargs):
-        """Return the view context data."""
-        context = super().get_context_data(**kwargs)
-        context["markers"] = json.loads(serializers.serialize("geojson", Stations.objects.all()))
-        return context
 
+#TODO: In the functions field, station, sensor, remove and merge the duplicated """ menu section """
+# into a new function
 
 def index(request): #Fields
     """
         Return the active fields as a menu.
-        TODO: Build a google map will all stations and fields
     """
     fields_list = Fields.objects.filter(field_active=1)
-    #stations_list = Stations.objects.filter(station_active=1)
     return render(request, 'map/home.html', {'fields_list': fields_list})
 
 def field(request, idfield):
     """
-        Get all active fields
-        Build a tree with stations and sensors as subtree
+        Call the menu function to display the active fields, the stations according to the selected field and the sensors
+        for each station
     """
 
-    """ Slider section """
-    fields_list = Fields.objects.filter(field_active=1)
-
-    stations_list = []
-    for st in Stations.objects.filter(fields_id_field=idfield, station_active=1):
-        a_stationsonde = {
-            'id_station': st.id_station,
-            'station_name': st.station_name,
-            'station_longname': st.station_longname,
-            'fields_id_field': st.fields_id_field.id_field,
-            'collection_id': '??',
-            'collation_date': '??',
-            'sondes': [],
-        }
-
-        for se in Sensors.objects.filter(stations_id_station=st.id_station, sensor_active=1):
-            a_stationsonde['sondes'].append({
-                'id_sensor': se.id_sensor,
-                'sensor_name': se.sensor_name,
-                'sensor_longname': se.sensor_longname
-            })
-        stations_list.append(a_stationsonde)
-
-    """ content section """
-
-
+    """ Menu section """
+    fields_list,stations_list = menu(idfield);
 
     context = {
         'stations_list': stations_list,
@@ -89,35 +53,14 @@ def field(request, idfield):
 
 def station(request, idfield, idstation):
     """
-        Get all active fields
-        Get a sensor list for matching station
-        Build a tree with stations and sensors as subtree
-        TODO: Get the measures of all sensor for the selected station
+        Call the menu function to display the active fields, the stations according to the selected field and the sensors
+        for each station
+        Display ALL sensor values in a graph for the selected station
+        TODO: Add the date form to filter the measure according to date range
     """
 
-    """ Slider section"""
-    fields_list = Fields.objects.filter(field_active=1)
-
-    stations_list = []
-    for st in Stations.objects.filter(fields_id_field=idfield, station_active=1):
-        a_stationsonde = {
-            'id_station': st.id_station,
-            'station_name': st.station_name,
-            'station_longname': st.station_longname,
-            'fields_id_field': st.fields_id_field.id_field,
-            'collection_id': '??',
-            'collation_date': '??',
-            'sondes': [],
-        }
-
-        for se in Sensors.objects.filter(stations_id_station=st.id_station, sensor_active=1):
-            a_stationsonde['sondes'].append({
-                'id_sensor': se.id_sensor,
-                'sensor_name': se.sensor_name,
-                'sensor_longname': se.sensor_longname
-            })
-
-        stations_list.append(a_stationsonde)
+    """ Menu section"""
+    fields_list, stations_list = menu(idfield);
 
     """ Content section """
     station = Stations.objects.get(id_station=idstation)
@@ -160,16 +103,13 @@ def station(request, idfield, idstation):
         measures_by_sensor.append(sondes)
 
     """ Test panda and Matplotlib """
-    """
+    """ To keep for record
     mesures = Measures.objects.filter(measure_created__range=["2022-05-2 10:00:00", "2022-05-2 20:22:00"],
                                           sensors_id_sensor=72).order_by('-measure_created')
     sales_df = pandas.DataFrame(mesures.values())
     print('panda:', sales_df)
     """
-
-
-
-    """ A agrder
+    """ To keep for record
     st = Stations.objects.get(id_station=idstation)
     sensors = st.sensors_set.all()
     s_json = serializers.serialize('json', sensors)
@@ -193,36 +133,14 @@ def station(request, idfield, idstation):
 
 def sensor(request, idfield, idstation, idsensor):
     """
-        Get all active fields
-        Get a sensor list for matching station
-        Build a tree with stations and sensors as subtree
-        Get information for one selected sensor according to a date range (TO DO)
-        Get information for one selected station
+        Call the menu function to display the active fields, the stations according to the selected field and the sensors
+        for each station
+        Display the sensor values in a graph
+        TODO: Add the date form to filter the measure according to date range
     """
 
-    """ Slider section """
-    fields_list = Fields.objects.filter(field_active=1)
-
-    stations_list = []
-    for st in Stations.objects.filter(fields_id_field=idfield, station_active=1):
-        a_stationsonde = {
-            'id_station': st.id_station,
-            'station_name': st.station_name,
-            'station_longname': st.station_longname,
-            'fields_id_field': st.fields_id_field.id_field,
-            'collection_id': '??',
-            'collation_date': '??',
-            'sondes': [],
-        }
-
-        for se in Sensors.objects.filter(stations_id_station=st.id_station, sensor_active=1):
-            a_stationsonde['sondes'].append({
-                'id_sensor': se.id_sensor,
-                'sensor_name': se.sensor_name,
-                'sensor_longname': se.sensor_longname
-            })
-
-        stations_list.append(a_stationsonde)
+    """ menu section """
+    fields_list, stations_list = menu(idfield);
 
     """ Content section """
     sensor = Sensors.objects.get(id_sensor=idsensor)
@@ -231,9 +149,6 @@ def sensor(request, idfield, idstation, idsensor):
     latest_measure = Measures.objects.filter(sensors_id_sensor=idsensor).order_by('-measure_created').first()
     # Get all measures from 3 days before the last measure
     sensor_measures = Measures.objects.filter(sensors_id_sensor=idsensor, measure_created__range=[latest_measure.measure_created - timedelta(days=3), latest_measure.measure_created]).order_by('measure_created')
-
-    #DEL Measures.objects.filter(measure_created__range=[latest_measure.measure_created - timedelta(days=1), latest_measure.measure_created],sensors_id_sensor=me.id_sensor).order_by('measure_created'):
-
 
     station = Stations.objects.get(id_station=idstation)
 
@@ -253,7 +168,6 @@ def sensor(request, idfield, idstation, idsensor):
 
 
 # DRF
-
 def api(request, idfield):
     '''
     Exercise with Django Rest Framework (GET/POST)
@@ -280,9 +194,48 @@ def api(request, idfield):
             # provide a Json Response with the necessary error information
         return JsonResponse(serializer.errors, status=400)
 
+def menu(fieldid):
+    """
+    Display all active fields
+    As a subtree, display all stations according to a selected field
+    As a subtree, display all sensors for a station
+    """
+    fields_list = Fields.objects.filter(field_active=1)  # Get all active fields
 
+    stations_list = []  # Initiate a list to store the stations according to the filed id
+    for st in Stations.objects.filter(fields_id_field=fieldid, station_active=1):
+        a_stationsonde = {
+            'id_station': st.id_station,
+            'station_name': st.station_name,
+            'station_longname': st.station_longname,
+            'fields_id_field': st.fields_id_field.id_field,
+            'collection_id': '??',
+            'collation_date': '??',
+            'sondes': [],
+        }
 
+        for se in Sensors.objects.filter(stations_id_station=st.id_station, sensor_active=1):
+            a_stationsonde['sondes'].append({
+                'id_sensor': se.id_sensor,
+                'sensor_name': se.sensor_name,
+                'sensor_longname': se.sensor_longname
+            })
+        stations_list.append(a_stationsonde)
 
+    return fields_list, stations_list
+
+#class MarkersMapView(TemplateView):
+#    """
+#        Display the markers following the part1 (Maps with Django (1))
+#        https://www.paulox.net/2020/12/08/maps-with-django-part-1-geodjango-spatialite-and-leaflet/
+#        That function is not used and I keep it for record
+#    """
+#    template_name = "map/map.html"
+#    def get_context_data(self, **kwargs):
+#        """Return the view context data."""
+#        context = super().get_context_data(**kwargs)
+#        context["markers"] = json.loads(serializers.serialize("geojson", Stations.objects.all()))
+#        return context
 
 
 def debugObject(obj):
@@ -290,16 +243,16 @@ def debugObject(obj):
     obj_json = serializers.serialize('json', obj)
     return HttpResponse(obj_json, content_type='application/json')
 
-def aside(request):
-    """Return the active fields."""
-    fields = Fields.objects.filter(field_active=1)
-    fields.stations_set.all()
-    #st = {}
-    #for e in Fields.objects.filter(field_active=1):
-    #    print(e.field_name)
-    #    st[e.id_field] = Stations.objects.filter(station_active=1, id_field=e.id_field)
-
-    return render(request, 'map/slider.html')
+#def aside(request):
+#    """ That function was used to show the field list in left side"""
+#    fields = Fields.objects.filter(field_active=1)
+#    fields.stations_set.all()
+#    #st = {}
+#    #for e in Fields.objects.filter(field_active=1):
+#    #    print(e.field_name)
+#    #    st[e.id_field] = Stations.objects.filter(station_active=1, id_field=e.id_field)
+#
+#    return render(request, 'map/slider.html')
 
 
 #class IndexView(ListView):
