@@ -4,7 +4,7 @@
     <title>EcoMap -</title>
 {% endblock %}
 
-{% block slider %}
+{% block menu %}
 <div>
 
     {% if fields_list %}
@@ -33,7 +33,7 @@
                     {% for se in station.sondes  %}
                     <li>
                         <a href="{% url 'map:sensor' station.fields_id_field station.id_station se.id_sensor %}">
-                            [{{ se.id_sensor }}] {{ se.sensor_longname }}
+                            {{ se.sensor_longname }}
                         </a>
                     </li>
                     {% empty %}

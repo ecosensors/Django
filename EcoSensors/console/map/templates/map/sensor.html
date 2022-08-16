@@ -4,7 +4,7 @@
     <title>Sensors by Station</title>
 {% endblock %}
 
-{% block slider %}
+{% block menu %}
 <div>
 
      {% if fields_list %}
@@ -27,7 +27,7 @@
             {% for station in stations_list %}
             <li>
                 <a href="{% url 'map:station' station.fields_id_field station.id_station %}">
-                    [{{ station.id_station }}] {{ station.station_longname }} ({{ station.fields_id_field }})
+                    [{{ station.id_station }}] {{ station.station_longname }}
                 </a>
                 <ul>
                     {% for se in station.sondes  %}
