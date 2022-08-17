@@ -20,15 +20,10 @@ map.fitBounds(feature.getBounds(), { padding: [100, 100] });
 const copy = "© <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors";
 const url = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
 const osm = L.tileLayer(url, { attribution: copy });
-latlng = L.latLng(46.184610, 6.008253);
-const map = L.map("map", {center: latlng, zoom: 15, layers: [osm] });
-console.log("getBounds: ",map.getBounds().toBBoxString())
 
-var markers = L.markerClusterGroup({
-    spiderfyOnMaxZoom: false,
-    showCoverageOnHover: false,
-    zoomToBoundsOnClick: false
-});
+latlng = L.latLng(46.184610, 6.008253);
+const map = L.map("map", {center: latlng, zoom: 10, layers: [osm] });
+console.log("getBounds: ",map.getBounds().toBBoxString())
 
 /*
 map.
@@ -37,47 +32,61 @@ map.
     .on("locationerror", () => map.setView([46.184610, 6.008253], 13)); // If not found, diplay taht position
 */
 
+var markers = L.markerClusterGroup({
+    spiderfyOnMaxZoom: false,
+    showCoverageOnHover: false
+});
+
+render_markers();
+
 async function load_markers() {
-    const markers_url = `/api/map/?in_bbox=${map.getBounds().toBBoxString()}`;
-    console.log("markers_url: ",markers_url);
+    //const markers_url = `/api/map/?in_bbox=${map.getBounds().toBBoxString()}`;
+    const markers_url = `/api/map/`;
+    //console.log("markers_url: ",markers_url);
     const response = await fetch(markers_url);
-    console.log("response: ",response);
+    //console.log("response: ",response);
     const geojson = await response.json();
-    console.log("geojson: ",geojson);
+    //console.log("geojson: ",geojson);
     return geojson;
 }
 
 async function render_markers() {
-    const markers = await load_markers();
-    console.log("Markers:",markers);
-    L.geoJSON(markers)
+    const marker_s = await load_markers();
+
+    /*
+    * Leaflet.markercluster
+    */
+    var geoJsonLayer = L.geoJson(marker_s, {
+	    onEachFeature: function (feature, layer) {
+		    layer.bindPopup(feature.properties.station_longname);
+		}
+	});
+
+    markers.addLayer(geoJsonLayer);
+    map.addLayer(markers);
+
+    /*
+    * Get the marker lat/lng to have all stations centralized in the map frame
+    */
+    var boundsMarkers = []; // Get all lat and lng of markers
+    for (var i = 0; i < marker_s['features'].length ; i++){
+        lat = marker_s['features'][i].geometry.coordinates[1];
+        lng = marker_s['features'][i].geometry.coordinates[0];
+        //console.log("lat: ", lat, "lng: ", lng);
+        boundsMarkers.push(L.latLng(lat, lng));
+    }
+
+    bounds = L.latLngBounds(boundsMarkers);
+    map.fitBounds(bounds,{ padding: [10, 10] });
+
+    /*
+    // Keep for record
+    L.geoJson(marker_s)
     .bindPopup((layer) => layer.feature.properties.station_longname)
     .addTo(map);
-}
-
-map.on("moveend", render_markers);
-
-
-
-/*
-if($("#map").length > 0)
-{
-    // Initiate the map
-    var map = L.map('map').setView([46.184610, 6.008253], 13);
-    // Add a layer with the openstreetmap
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '© OpenStreetMap'
-    }).addTo(map);
-
-
-    // Add a marker
-    var allMarkers=[];
-    // Faire une loop pour optenir les latlong des stations selon le field
-    // allMarkers.push(L.latLng(data.properties[i]['la'], data.properties[i]['lo']));
-    // fermer la loop
-
-    var marker = L.marker([46.186090, 5.997505]).addTo(map);
+    */
 
 }
-*/
+
+//map.on("moveend", render_markers);
+
