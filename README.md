@@ -27,7 +27,6 @@ $ python3 -m venv .env
 * (.env) ./manage.py startapp blog
 
 
-
 ## Help
 Uesfull links:
 
