@@ -20,5 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('map/', include('map.urls')),
     path('', include('map.urls')),
-    path("api/", include("map.api")),
+    path("api/<int:idf>/", include("map.api")),
 ]
