@@ -17,10 +17,9 @@ class MarkerViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Stations.objects.filter(station_active=1, map=1)
     serializer_class = StationsSerializer
 
-    def get_queryset(self, **kwargs):
+    def get_queryset(request):
         #field_id = self.kwargs['idfield']
-        print(self.kwargs)
-        print(kwargs)
+        print("ppp:", request.GET.get("idfield"))
         return Stations.objects.filter(fields_id_field=1)
 
 
