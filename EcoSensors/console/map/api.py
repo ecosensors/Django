@@ -6,5 +6,7 @@ from map.viewsets import MarkerViewSet
 
 router = routers.DefaultRouter()
 router.register(r"map", MarkerViewSet)
+#router.register(r"^map/{idf}/$", MarkerViewSet)
+
 urlpatterns = router.urls
 

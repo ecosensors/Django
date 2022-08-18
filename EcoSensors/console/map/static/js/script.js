@@ -6,7 +6,9 @@ $(document).ready(function(){
 * Chartjs
 */
 var mychart=null;
-show_graph();
+if($("#charts").length > 0){
+    show_graph();
+}
 function show_graph(){
     console.log("DEBUG: show_graph")
     var sensors=[];

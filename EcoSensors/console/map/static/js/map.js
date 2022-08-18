@@ -40,13 +40,15 @@ var markers = L.markerClusterGroup({
 render_markers();
 
 async function load_markers() {
+    iid = 4;
     //const markers_url = `/api/map/?in_bbox=${map.getBounds().toBBoxString()}`;
-    const markers_url = `/api/map/`;
-    //console.log("markers_url: ",markers_url);
+    //const markers_url = `/api/map/?in_bbox=${"2"}`;
+    const markers_url = `/api/map/2/`;
+    console.log("markers_url: ",markers_url);
     const response = await fetch(markers_url);
     //console.log("response: ",response);
     const geojson = await response.json();
-    //console.log("geojson: ",geojson);
+    console.log("geojson: ",geojson);
     return geojson;
 }
 
