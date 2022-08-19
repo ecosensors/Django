@@ -67,8 +67,9 @@
                                 <canvas id="sensor" class="canvas"></canvas>
                             </div>
                             <div class="card-body">
+                                <hr>
                                 <details>
-                                    <table>
+                                    <table class="table">
                                         <tr class="features" data-chart_fill="{{ sensor.chart_fill }}" data-chart_pointradius="{{ sensor.chart_pointradius }}" data-chart_pointhoverradius="{{ sensor.chart_pointhoverradius }}" data-showline="{{ sensor.chart_showline }}" data-chart_borderwidth="{{ sensor.chart_borderwidth }}" data-chart_style="{{ sensor.chart_style_id_chart_style.chart_style_value }}" data-unit="{{ sensor.sensor_types_id_sensor_type.measure_unit }}" data-sensor_longname="{{ sensor.sensor_longname }}" data-backgroundcolor="{{ sensor.chart_backgroundcolor_id_chart_backgroundcolor.colors_id_colors.color_value }}" data-bordercolor="{{ sensor.chart_bordercolor_id_chart_bordercolor.colors_id_colors.color_value }}">
                                             <th>Heure</th><th>Value</th><th>Collection id</th><th>Sensor ID</th><th>Measure ID</th>
                                         </tr>

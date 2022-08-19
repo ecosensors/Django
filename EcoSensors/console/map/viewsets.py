@@ -5,21 +5,23 @@
 from rest_framework import viewsets
 from rest_framework_gis import filters
 
+
 from map.models import Stations
 from map.serializers import StationsSerializer
 
 
 class MarkerViewSet(viewsets.ReadOnlyModelViewSet):
     """Marker view set."""
-    #print(self.kwargs.get('idfield'))
     bbox_filter_field = "location"
     filter_backends = (filters.InBBoxFilter,)
     queryset = Stations.objects.filter(station_active=1, map=1)
     serializer_class = StationsSerializer
-
+    """
+    def get_tags(self):
+        return Stations.objects.filter(fields_id_field=1)
+    """
     def get_queryset(self):
         #field_id = self.kwargs['idfield']
-        #print("ppp:", self.kwargs['idf'])
-        return Stations.objects.filter(fields_id_field=4)
-
+        #print("ppp:", self.kwargs['idfield'])
+        return Stations.objects.filter(fields_id_field=1)
 

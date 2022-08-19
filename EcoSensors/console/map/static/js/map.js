@@ -14,7 +14,12 @@ let feature = L.geoJSON(markers).bindPopup(function (layer) { return layer.featu
 console.log("mmm2: ",feature);
 map.fitBounds(feature.getBounds(), { padding: [100, 100] });
 */
-
+/*
+map.
+    locate() // Try to locate the user position
+    .on("locationfound", (e) => map.setView(e.latlng, 8))
+    .on("locationerror", () => map.setView([46.184610, 6.008253], 13)); // If not found, diplay taht position
+*/
 
 // Projet 2
 const copy = "© <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors";
@@ -22,15 +27,8 @@ const url = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
 const osm = L.tileLayer(url, { attribution: copy });
 
 latlng = L.latLng(46.184610, 6.008253);
-const map = L.map("map", {center: latlng, zoom: 10, layers: [osm] });
-console.log("getBounds: ",map.getBounds().toBBoxString())
-
-/*
-map.
-    locate() // Try to locate the user position
-    .on("locationfound", (e) => map.setView(e.latlng, 8))
-    .on("locationerror", () => map.setView([46.184610, 6.008253], 13)); // If not found, diplay taht position
-*/
+const map = L.map("map", {center: latlng, layers: [osm] });
+//console.log("getBounds: ",map.getBounds().toBBoxString())
 
 var markers = L.markerClusterGroup({
     spiderfyOnMaxZoom: false,
@@ -43,7 +41,8 @@ async function load_markers() {
     iid = 4;
     //const markers_url = `/api/map/?in_bbox=${map.getBounds().toBBoxString()}`;
     //const markers_url = `/api/map/?in_bbox=${"2"}`;
-    const markers_url = `/api/map/2/`;
+    //const markers_url = `/api/map/2/`;
+    const markers_url = `/api/map/1/`;
     console.log("markers_url: ",markers_url);
     const response = await fetch(markers_url);
     //console.log("response: ",response);

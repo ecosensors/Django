@@ -21,7 +21,6 @@ from .serializers import StationsSerializer
 
 from .models import Fields, Stations, Sensors, Measures, Collections
 
-
 def index(request): #Fields
     """
         Return the active fields as a menu.
@@ -34,7 +33,7 @@ def field(request, idfield):
         Call the menu function to display the active fields, the stations according to the selected field and the sensors
         for each station
     """
-    print("Fieldddd")
+    #print("Fieldddd", request.GET.get("idfield"))
     """ Menu section """
     fields_list,stations_list = menu(idfield);
 

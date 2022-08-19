@@ -84,8 +84,9 @@
                                     Créé le: {{ se.sensor_created }}<br>
 
                                 </p>
+                                <hr>
                                 <details>
-                                        <table>
+                                        <table class="table">
                                             <tr class="features" data-chart_fill="{{ se.chart_fill }}" data-chart_pointradius="{{ se.chart_pointRadius }}" data-chart_pointhoverradius="{{ se.chart_pointHoverRadius }}" data-showline="{{ se.chart_showLine }}" data-chart_borderwidth="{{ se.chart_borderWidth }}" data-chart_style="{{ se.chart_style_id_chart_style.chart_style_value }}" data-unit="{{ se.sensor_types_id_sensor_type.measure_unit }}" data-sensor_longname="{{ se.sensor_longname }}" data-backgroundcolor="{{ se.chart_backgroundColor_id_chart_backgroundColor.colors_id_colors.color_value }}" data-bordercolor="{{ se.chart_borderColor_id_chart_borderColor.colors_id_colors.color_value }}">
                                                 <th>Date</th><th>Value</th>
                                             </tr>

@@ -4,9 +4,11 @@
 from rest_framework import routers
 from map.viewsets import MarkerViewSet
 
-router = routers.DefaultRouter()
-router.register(r"map", MarkerViewSet)
-#router.register(r"^map/{idf}/$", MarkerViewSet)
 
+router = routers.DefaultRouter()
+#router.register(r"map", MarkerViewSet) #!!!?????
+#router.register(r"^map/{idf}/$", MarkerViewSet)
+#router.register(r"^map/(?P<id_f>[0-9]+)/$", MarkerViewSet)
+router.register(r"map/", MarkerViewSet)
 urlpatterns = router.urls
 

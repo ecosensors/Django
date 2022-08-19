@@ -20,5 +20,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('map/', include('map.urls')),
     path('', include('map.urls')),
-    path("api/<int:idf>/", include("map.api")),
+    #path("api/", include("map.api")),
+    #path("api/map/<int:idf>/", include("map.api")),
+    path("api/map/<int:idfield>/", MarkerViewSet.as_view(), name="marker_view_set")
+    #path("api/{idf}", include("map.api")),
 ]
