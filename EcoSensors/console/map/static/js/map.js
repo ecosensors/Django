@@ -38,7 +38,6 @@ var markers = L.markerClusterGroup({
 render_markers();
 
 async function load_markers() {
-    iid = 4;
     //const markers_url = `/api/map/?in_bbox=${map.getBounds().toBBoxString()}`;
     //const markers_url = `/api/map/?in_bbox=${"2"}`;
     //const markers_url = `/api/map/2/`;
