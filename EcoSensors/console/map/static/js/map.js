@@ -41,7 +41,7 @@ async function load_markers() {
     //const markers_url = `/api/map/?in_bbox=${map.getBounds().toBBoxString()}`;
     //const markers_url = `/api/map/?in_bbox=${"2"}`;
     //const markers_url = `/api/map/2/`;
-    const markers_url = `/api/map/1/`;
+    const markers_url = `/api/map/4/`;
     console.log("markers_url: ",markers_url);
     const response = await fetch(markers_url);
     //console.log("response: ",response);

@@ -21,7 +21,7 @@ class MarkerViewSet(viewsets.ReadOnlyModelViewSet):
         return Stations.objects.filter(fields_id_field=1)
     """
     def get_queryset(self):
-        #field_id = self.kwargs['idfield']
+        print("iii",self.kwargs['idfield'])
         #print("ppp:", self.kwargs['idfield'])
-        return Stations.objects.filter(fields_id_field=1)
+        return Stations.objects.filter(fields_id_field=2)
 
