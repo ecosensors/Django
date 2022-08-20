@@ -11,7 +11,10 @@ from map.serializers import StationsSerializer
 
 
 class MarkerViewSet(viewsets.ReadOnlyModelViewSet):
-    """Marker view set."""
+    """
+    API: Get the stations by field
+    See project/urls.py
+    """
     bbox_filter_field = "location"
     filter_backends = (filters.InBBoxFilter,)
     #queryset = Stations.objects.filter(station_active=1, map=1)
