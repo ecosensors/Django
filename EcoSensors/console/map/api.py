@@ -4,10 +4,8 @@
 from rest_framework import routers
 from map.viewsets import MarkerViewSet
 
+""" THis is now not used to show the map"""
 router = routers.DefaultRouter()
-#router.register(r"map", MarkerViewSet) #!!!?????
-#router.register(r"^map/{idf}/$", MarkerViewSet)
-#router.register(r"^map/(?P<id_f>[0-9]+)/$", MarkerViewSet)
-router.register(r"map/", MarkerViewSet)
+router.register(r"map", MarkerViewSet)
 urlpatterns = router.urls
 

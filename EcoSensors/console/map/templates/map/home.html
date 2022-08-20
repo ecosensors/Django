@@ -9,9 +9,14 @@
 
     {% if fields_list %}
         <h4>Terrains</h4>
-        <ul>
+        <ul class="nav flex-column">
+            <li class="nav-link">
+                <i class="la la-map"></i>
+                <a href="{% url 'map:index' %}">Tous</a>
+            </li>
             {% for field in fields_list %}
-            <li>
+            <li class="nav-link">
+                <i class="la la-object-group"></i>
                 <a href="{% url 'map:field' field.id_field %}">({{ field.id_field}}){{ field.field_name}}</a>
             </li>
             {% endfor %}
@@ -20,19 +25,22 @@
         <p>No fields are available.</p>
     {% endif %}
 
-
+<hr>
     {% if stations_list %}
         <h4>Stations</h4>
-        <ul>
+        <ul class="nav flex-column">
             {% for station in stations_list %}
-            <li>
+            <li class="nav-link l1">
+                <i class="la la-map"></i>
                 <a href="{% url 'map:station' station.id_station %}">{{ station.id_station }} ({{ station.station_longname }} ({{ station.fields_id_field.id_field }})</a>
             </li>
             {% endfor %}
         </ul>
 
     {% else %}
-        <p>No Station available.</p>
+
+                <p>Sélectionner un terrain</p>
+
     {% endif %}
 
 
@@ -43,5 +51,5 @@
 
 {% block map %}
 <h4>Ici, toutes les stations de tous les terrains seront affichées.</h4>
-<div id="map">Map</div>
+<div id="map" data-field="{{ id_field }}">Map</div>
 {% endblock %}

@@ -14,14 +14,14 @@ class MarkerViewSet(viewsets.ReadOnlyModelViewSet):
     """Marker view set."""
     bbox_filter_field = "location"
     filter_backends = (filters.InBBoxFilter,)
-    queryset = Stations.objects.filter(station_active=1, map=1)
+    #queryset = Stations.objects.filter(station_active=1, map=1)
     serializer_class = StationsSerializer
-    """
-    def get_tags(self):
-        return Stations.objects.filter(fields_id_field=1)
-    """
+
     def get_queryset(self):
-        print("iii",self.kwargs['idfield'])
-        #print("ppp:", self.kwargs['idfield'])
-        return Stations.objects.filter(fields_id_field=2)
+        idf = self.kwargs['idfield']
+        if idf > 0:
+            return Stations.objects.filter(station_active=1, map=1, fields_id_field=idf)
+        else:
+            return Stations.objects.filter(station_active=1, map=1)
+
 

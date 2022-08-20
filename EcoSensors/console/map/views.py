@@ -26,7 +26,7 @@ def index(request): #Fields
         Return the active fields as a menu.
     """
     fields_list = Fields.objects.filter(field_active=1)
-    return render(request, 'map/home.html', {'fields_list': fields_list})
+    return render(request, 'map/home.html', {'fields_list': fields_list, 'id_field': 0,})
 
 def field(request, idfield):
     """
@@ -39,7 +39,8 @@ def field(request, idfield):
 
     context = {
         'stations_list': stations_list,
-        'fields_list': fields_list
+        'fields_list': fields_list,
+        'id_field': idfield,
     }
 
     #s_json = json.dumps(stations_list, indent=4)
