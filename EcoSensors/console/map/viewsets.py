@@ -5,7 +5,6 @@
 from rest_framework import viewsets
 from rest_framework_gis import filters
 
-
 from map.models import Stations
 from map.serializers import StationsSerializer
 
@@ -13,7 +12,7 @@ from map.serializers import StationsSerializer
 class MarkerViewSet(viewsets.ReadOnlyModelViewSet):
     """
     API: Get the stations by field
-    See project/urls.py
+    See project/urls.py (path("api/map/<int:idfield>/", MarkerViewSet.as_view({'get':'list'}), name="marker_view_set"))
     """
     bbox_filter_field = "location"
     filter_backends = (filters.InBBoxFilter,)
