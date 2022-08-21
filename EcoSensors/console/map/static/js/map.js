@@ -3,7 +3,7 @@
 */
 
 /*
-// Project 1
+// Project 1 (Keep for record)
 const attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 const map = L.map('map')
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: attribution }).addTo(map);
@@ -16,7 +16,7 @@ map.fitBounds(feature.getBounds(), { padding: [100, 100] });
 */
 /*
 map.
-    locate() // Try to locate the user position
+    locate() // Try to locate the user position // Location the user location to get the map at the user location
     .on("locationfound", (e) => map.setView(e.latlng, 8))
     .on("locationerror", () => map.setView([46.184610, 6.008253], 13)); // If not found, diplay taht position
 */
@@ -40,17 +40,17 @@ render_markers();
 async function load_markers() {
     //const markers_url = `/api/map/?in_bbox=${map.getBounds().toBBoxString()}`;
     const markers_url = `/api/map/` + $('#map').attr('data-field') +`/`; // $('#map').attr('data-field')
-    console.log("data-field: ", $('#map').attr('data-field'));
-    console.log("markers_url: ",markers_url);
+    //console.log("data-field: ", $('#map').attr('data-field'));
+    //console.log("markers_url: ",markers_url);
     const response = await fetch(markers_url);
     //console.log("response: ",response);
     const geojson = await response.json();
-    console.log("geojson: ",geojson);
+    //console.log("geojson: ",geojson);
     return geojson;
 }
 
 async function render_markers() {
-    const marker_s = await load_markers();
+    const marker_s = await load_markers();      // Get all markers
 
     /*
     * Leaflet.markercluster
@@ -62,12 +62,12 @@ async function render_markers() {
 	});
 
     markers.addLayer(geoJsonLayer);
-    map.addLayer(markers);
+    map.addLayer(markers);                      // Add the layer to the Map
 
     /*
     * Get the marker lat/lng to have all stations centralized in the map frame
     */
-    var boundsMarkers = []; // Get all lat and lng of markers
+    var boundsMarkers = []; // Get all lat and lng of markers / stations
     for (var i = 0; i < marker_s['features'].length ; i++){
         lat = marker_s['features'][i].geometry.coordinates[1];
         lng = marker_s['features'][i].geometry.coordinates[0];
@@ -76,7 +76,7 @@ async function render_markers() {
     }
 
     bounds = L.latLngBounds(boundsMarkers);
-    map.fitBounds(bounds,{ padding: [10, 10] });
+    map.fitBounds(bounds,{ padding: [10, 10] });    // Fit the map according to the position of the stations
 
     /*
     // Keep for record
