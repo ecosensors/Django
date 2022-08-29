@@ -196,6 +196,8 @@ def menu(fieldid):
     return fields_list, stations_list
 
 
+
+
 """
 The functions bellow are not used any more but I keep them as a record
 """
@@ -225,6 +227,7 @@ def api(request, idfield):
             return JsonResponse(serializer.data, status=201)
             # provide a Json Response with the necessary error information
         return JsonResponse(serializer.errors, status=400)
+
 
 
 """
