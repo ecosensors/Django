@@ -33,13 +33,7 @@ def field(request, idfield):
         Call the menu function to display the active fields, the stations according to the selected field and the sensors
         for each station
     """
-    #print("Fieldddd", request.GET.get("idfield"))
-    """ Menu section """
-    fields_list,stations_list = menu(idfield);
-
     context = {
-        'stations_list': stations_list,
-        'fields_list': fields_list,
         'id_field': idfield,
     }
 
@@ -56,16 +50,13 @@ def station(request, idfield, idstation):
         TODO: Add the date form to filter the measure according to date range
     """
 
-    """ Menu section"""
-    fields_list, stations_list = menu(idfield);
-
     """ Content section """
     station = Stations.objects.get(id_station=idstation)
     sensors_list = Sensors.objects.filter(stations_id_station=idstation, sensor_active=1)
 
     measures_by_sensor = []
     for me in sensors_list:
-        print(me.sensor_name, me.id_sensor)
+        #print(me.sensor_name, me.id_sensor)
         sondes = {
             'id_sensor': me.id_sensor,
             'stations_id_station': me.stations_id_station,
@@ -94,6 +85,7 @@ def station(request, idfield, idstation):
                 'value': me.value,
                 'sensors_id_sensor': me.sensors_id_sensor,
                 'collections_id_collection': me.collections_id_collection,
+
             })
 
 
@@ -118,8 +110,7 @@ def station(request, idfield, idstation):
     context ={
         'station': station,
         'sensors': measures_by_sensor,
-        'fields_list': fields_list,
-        'stations_list': stations_list
+        'id_field': idfield,
     }
 
 
@@ -136,9 +127,6 @@ def sensor(request, idfield, idstation, idsensor):
         TODO: Add the date form to filter the measure according to date range
     """
 
-    """ menu section """
-    fields_list, stations_list = menu(idfield);
-
     """ Content section """
     sensor = Sensors.objects.get(id_sensor=idsensor)
 
@@ -153,8 +141,7 @@ def sensor(request, idfield, idstation, idsensor):
         'sensor':sensor,
         'station':station,
         'sensor_measures': sensor_measures,
-        'fields_list': fields_list,
-        'stations_list': stations_list
+        'id_field' : idfield
     }
 
     #s_json = json.dumps(station, indent=4)
@@ -162,12 +149,8 @@ def sensor(request, idfield, idstation, idsensor):
     #return HttpResponse(s_json, content_type='application/json')
     return render(request, 'map/sensor.html', context)
 
+"""
 def menu(fieldid):
-    """
-    Display all active fields
-    As a subtree, display all stations according to a selected field
-    As a subtree, display all sensors for a station
-    """
     # Query the active fields
     fields_list = Fields.objects.filter(field_active=1)  # Get all active fields
 
@@ -195,7 +178,7 @@ def menu(fieldid):
 
     return fields_list, stations_list
 
-
+"""
 
 
 """
