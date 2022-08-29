@@ -2,6 +2,7 @@ import pandas
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404, render
 from datetime import date, timedelta
+from django.views.decorators.cache import cache_page
 import json
 from django.core import serializers
 #from django.core.serializers import serialize
@@ -21,12 +22,14 @@ from .serializers import StationsSerializer
 
 from .models import Fields, Stations, Sensors, Measures, Collections
 
+
 def index(request): #Fields
     """
         Return the active fields as a menu.
     """
     fields_list = Fields.objects.filter(field_active=1)
     return render(request, 'map/home.html', {'fields_list': fields_list, 'id_field': 0,})
+
 
 def field(request, idfield):
     """
@@ -42,6 +45,9 @@ def field(request, idfield):
     return render(request, 'map/field.html', context)
 
 
+#TODO: Check if we can delete the cache of a station, when a station have sent a measure. In that case, we could extend the cache duration TO 60mn.
+
+@cache_page(120)
 def station(request, idfield, idstation):
     """
         Call the menu function to display the active fields, the stations according to the selected field and the sensors
@@ -119,6 +125,7 @@ def station(request, idfield, idstation):
 
     return render(request, 'map/station.html', context)
 
+
 def sensor(request, idfield, idstation, idsensor):
     """
         Call the menu function to display the active fields, the stations according to the selected field and the sensors
@@ -184,6 +191,8 @@ def menu(fieldid):
 """
 The functions bellow are not used any more but I keep them as a record
 """
+
+
 # DRF
 def api(request, idfield):
     '''

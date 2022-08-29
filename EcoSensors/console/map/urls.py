@@ -6,9 +6,9 @@ app_name="map"
 urlpatterns = [
     #path('', views.IndexView.as_view(), name='index'),
     path('', views.index, name='index'),
-    path('<int:idfield>/field', views.field, name='field'),
-    path('<int:idfield>/<int:idstation>/station', views.station, name='station'),
-    path('<int:idfield>/<int:idstation>/<int:idsensor>/sensor', views.sensor, name='sensor'),
+    path('field/<int:idfield>', views.field, name='field'),
+    path('field/<int:idfield>/station/<int:idstation>', views.station, name='station'),
+    path('field/<int:idfield>/station/<int:idstation>/sensor/<int:idsensor>', views.sensor, name='sensor'),
     #path('<int:idfield>/', views.api, name='api'),
     # path("mapy/", MarkersMapView.as_view()), # (Maps with Django (1))
     #path('<int:idstation>/sensors', views.sensors, name='sensors'),

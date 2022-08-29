@@ -1,9 +1,11 @@
 from django import template
+from django.views.decorators.cache import cache_page
 from map.models import Fields, Stations, Sensors, Measures, Collections
 register = template.Library()
 
 
 @register.simple_tag
+@cache_page(1800)
 def menuFields():
     """
     Display all active fields
@@ -11,7 +13,9 @@ def menuFields():
     fields_list = Fields.objects.filter(field_active=1)  # Get all active fields
     return fields_list
 
+
 @register.simple_tag
+@cache_page(1800)
 def menuStations(fieldid):
     """
     Display all active stations according to a selected field
