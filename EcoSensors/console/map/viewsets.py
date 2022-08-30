@@ -8,8 +8,32 @@ from rest_framework_gis import filters
 from map.models import Stations
 from map.serializers import StationsSerializer
 
-
 class MarkerViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    API: Retirn les marker des stations
+    See project/urlsapi.py (path("api/map/<int:idfield>/", MarkerViewSet.as_view({'get':'list'}), name="marker_view_set"))
+    """
+    bbox_filter_field = "location"
+    filter_backends = (filters.InBBoxFilter,)
+    #queryset = Stations.objects.filter(station_active=1, map=1)
+    serializer_class = StationsSerializer
+
+    def get_queryset(self):
+        idf = self.kwargs['idfield']
+        if idf > 0:
+            return Stations.objects.filter(station_active=1, map=1, fields_id_field=idf)
+        else:
+            return Stations.objects.filter(station_active=1, map=1)
+
+
+
+
+
+
+
+
+
+class SensorsViewSet(viewsets.ReadOnlyModelViewSet):
     """
     API: Get the stations by field
     See project/urls.py (path("api/map/<int:idfield>/", MarkerViewSet.as_view({'get':'list'}), name="marker_view_set"))

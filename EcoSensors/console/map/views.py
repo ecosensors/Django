@@ -27,6 +27,7 @@ def index(request): #Fields
     """
         Return the active fields as a menu.
     """
+    # TODO, Is really usefull?? Check that
     fields_list = Fields.objects.filter(field_active=1)
     return render(request, 'map/home.html', {'fields_list': fields_list, 'id_field': 0,})
 
@@ -112,7 +113,8 @@ def station(request, idfield, idstation):
     m = Measures.objects.filter(measure_created__range=["2022-07-2 20:00:00", "2022-07-2 20:22:00"], collections_id_collection=263971)
     measures = m.  .all()
     """
-
+    print("DEBUG")
+    print(measures_by_sensor)
     context ={
         'station': station,
         'sensors': measures_by_sensor,
@@ -191,35 +193,6 @@ def menu(fieldid):
 """
 The functions bellow are not used any more but I keep them as a record
 """
-
-
-# DRF
-def api(request, idfield):
-    '''
-    Exercise with Django Rest Framework (GET/POST)
-    https://blog.logrocket.com/how-to-build-vue-js-app-django-rest-framework/#setting-up-vuejs-client-app
-    '''
-    if(request.method == 'GET'):
-        # get all the tasks
-        stations = Stations.objects.filter(fields_id_field=idfield, station_active=1)
-        # serialize the task data
-        serializer = StationsSerializer(stations, many=True)
-        # return a Json response
-        return JsonResponse(serializer.data,safe=False)
-    elif(request.method == 'POST'):
-        # parse the incoming information
-        data = JSONParser().parse(request)
-        # instanciate with the serializer
-        serializer = StationsSerializer(data=data)
-        # check if the sent information is okay
-        if(serializer.is_valid()):
-            # if okay, save it on the database
-            serializer.save()
-            # provide a Json Response with the data that was saved
-            return JsonResponse(serializer.data, status=201)
-            # provide a Json Response with the necessary error information
-        return JsonResponse(serializer.errors, status=400)
-
 
 
 """

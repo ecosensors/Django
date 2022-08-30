@@ -4,8 +4,8 @@ from map.models import Fields, Stations, Sensors, Measures, Collections
 register = template.Library()
 
 
-@register.simple_tag
 @cache_page(1800)
+@register.simple_tag
 def menuFields():
     """
     Display all active fields
@@ -14,8 +14,8 @@ def menuFields():
     return fields_list
 
 
-@register.simple_tag
 @cache_page(1800)
+@register.simple_tag
 def menuStations(fieldid):
     """
     Display all active stations according to a selected field

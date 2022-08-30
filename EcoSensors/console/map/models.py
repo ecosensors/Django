@@ -172,7 +172,8 @@ class Historicals(models.Model):
 
 class Measures(models.Model):
     id_measure = models.AutoField(primary_key=True)
-    sensors_id_sensor = models.ForeignKey('Sensors', models.DO_NOTHING, db_column='sensors_id_sensor')
+    #sensors_id_sensor = models.ForeignKey('Sensors', models.DO_NOTHING, db_column='sensors_id_sensor')
+    sensors_id_sensor = models.ForeignKey('Sensors', models.DO_NOTHING, related_name='sensor_n', db_column='sensors_id_sensor')
     collections_id_collection = models.ForeignKey(Collections, models.DO_NOTHING, db_column='collections_id_collection')
     value = models.DecimalField(max_digits=11, decimal_places=4)
     measure_created = models.DateTimeField()

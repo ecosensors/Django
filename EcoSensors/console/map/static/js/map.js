@@ -39,7 +39,7 @@ render_markers();
 
 async function load_markers() {
     //const markers_url = `/api/map/?in_bbox=${map.getBounds().toBBoxString()}`;
-    const markers_url = `/api/map/` + $('#map').attr('data-field') +`/`; // $('#map').attr('data-field')
+    const markers_url = `/api/map/field/` + $('#map').attr('data-field') +`/`; // $('#map').attr('data-field')
     //console.log("data-field: ", $('#map').attr('data-field'));
     //console.log("markers_url: ",markers_url);
     const response = await fetch(markers_url);
