@@ -19,31 +19,49 @@ class StationsSerializer(serializers.GeoFeatureModelSerializer):
 
 class SensorsSerializer(ser.ModelSerializer):
     class Meta:
-        fields = ("id_sensor","sensor_name")
+        fields = ("id_sensor","sensor_name", "sensor_types_id_sensor_type")
         model = Sensors
 
 
 class MeasuresSerializer(ser.ModelSerializer):
-    """
-    sensor_name = ser.SlugRelatedField(
-        many=False,
-        read_only=True,
-        slug_field='id_sensor'
-    )
-    """
 
-    sensor_name=SensorsSerializer(
-        many=True,
+    sensors_id_sensor=SensorsSerializer(
         read_only=True
     )
 
     class Meta:
-        fields = ("sensor_name", "sensor_name", "id_measure","sensors_id_sensor", "value", "measure_created")
+        fields = ("id_measure", "sensors_id_sensor", "collections_id_collection", "value", "measure_created")
         model = Measures
 
 
+class TypesSerializer(ser.ModelSerializer):
+    """
+    sensor_types_id_sensor_type=SensorsSerializer(
+        read_only=True
+    )
+    """
+
+
+    class Meta:
+        fields = ("id_sensor", "sensor_name","sensor_types_id_sensor_type")
+        model = Sensors
+
 """
-# Previous Exercise
+# NOTES
+
+## USEFULL FOR THE REST API (Not tested yet)
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+
+    @classmethod
+    def get_token(cls, user):
+        token = super(MyTokenObtainPairSerializer, cls).get_token(user)
+
+        # Add custom claims
+        token['username'] = user.username
+        return token
+
+
+## Previous Exercise
 from rest_framework import routers,serializers,viewsets
 from .models import Stations
 

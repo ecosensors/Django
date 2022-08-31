@@ -159,43 +159,19 @@ def sensor(request, idfield, idstation, idsensor):
     return render(request, 'map/sensor.html', context)
 
 """
-def menu(fieldid):
-    # Query the active fields
-    fields_list = Fields.objects.filter(field_active=1)  # Get all active fields
+# TOKEN
+# Garder cette class quand les TOKEN seront étudiés pour les API REST
 
-    stations_list = []  # Initiate a list to store the stations according to the filed id
-    # Query the active station according to a selected field
-    for st in Stations.objects.filter(fields_id_field=fieldid, station_active=1):
-        a_stationsonde = {
-            'id_station': st.id_station,
-            'station_name': st.station_name,
-            'station_longname': st.station_longname,
-            'fields_id_field': st.fields_id_field.id_field,
-            'collection_id': '??',
-            'collation_date': '??',
-            'sondes': [],
-        }
-        # Query the active sensor according to a station id
-        for se in Sensors.objects.filter(stations_id_station=st.id_station, sensor_active=1):
-            a_stationsonde['sondes'].append({
-                'id_sensor': se.id_sensor,
-                'sensor_name': se.sensor_name,
-                'sensor_longname': se.sensor_longname
-            })
-        # Append a station information to the station list
-        stations_list.append(a_stationsonde)
-
-    return fields_list, stations_list
-
+class MyObtainTokenPairView(TokenObtainPairView):
+    permission_classes = (AllowAny,)
+    serializer_class = MyTokenObtainPairSerializer
 """
+
 
 
 """
 The functions bellow are not used any more but I keep them as a record
-"""
 
-
-"""
 Maps with Django (1)
  https://www.paulox.net/2021/07/19/maps-with-django-part-2-geodjango-postgis-and-leaflet/
 """
@@ -218,54 +194,43 @@ def debugObject(obj):
     obj_json = serializers.serialize('json', obj)
     return HttpResponse(obj_json, content_type='application/json')
 
-#def aside(request):
-#    """ That function was used to show the field list in left side"""
-#    fields = Fields.objects.filter(field_active=1)
-#    fields.stations_set.all()
-#    #st = {}
-#    #for e in Fields.objects.filter(field_active=1):
-#    #    print(e.field_name)
-#    #    st[e.id_field] = Stations.objects.filter(station_active=1, id_field=e.id_field)
-#
-#    return render(request, 'map/slider.html')
+"""
+class IndexView(ListView):
+    template_name = 'map/index.html'
+    context_object_name = 'fields_list'
+    def get_queryset(self):
+        return Fields.objects.order_by('-field_created')[:5]
 
 
-#class IndexView(ListView):
-#    template_name = 'map/index.html'
-#    context_object_name = 'fields_list'
-#    def get_queryset(self):
-#        """Return the last five published questions."""
-#        return Fields.objects.order_by('-field_created')[:5]
+ class FieldsView(DetailView):
+    model = Fields
+    template_name = 'map/fields.html'
 
 
-# class FieldsView(DetailView):
-#    model = Fields
-#    template_name = 'map/fields.html'
+ class StationsView(ListView):
+    model = Stations
+    context_object_name = 'stations_list'
+    template_name = 'map/stations.html'
 
-
-# class StationsView(ListView):
-#    model = Stations
-#    context_object_name = 'stations_list'
-#    template_name = 'map/stations.html'
-#
-#    def get_queryset(self):
-#        """Return the last five published station."""
-#         return Stations.objects.order_by('-station_created')[:10]
+    def get_queryset(self):
+         return Stations.objects.order_by('-station_created')[:10]
 
 
 
 #def stations(request, fields_id_field):
     #stations_list = get_object_or_404(Stations, pk=field_id_field)
-#    stations_list = Stations.objects.filter(fields_id_field=fields_id_field, station_active=1)
-#    print(stations_list)
-#    sensors = Sensors.objects.filter(sensor_active=1)
+    stations_list = Stations.objects.filter(fields_id_field=fields_id_field, station_active=1)
+    print(stations_list)
+    sensors = Sensors.objects.filter(sensor_active=1)
 
-    #s = Sensors.objects.filter(Stations__station_longname)
-    #s = Stations.objects.filter(sensors__sensor_longname)
-    #s = Sensors.stations_id_station.station_longname(fields_id_field=fields_id_field)
+    s = Sensors.objects.filter(Stations__station_longname)
+    s = Stations.objects.filter(sensors__sensor_longname)
+    s = Sensors.stations_id_station.station_longname(fields_id_field=fields_id_field)
 
- #   return render(request, 'map/stations.html', {'stations_list':stations_list, 'sensors':sensors })
+    return render(request, 'map/stations.html', {'stations_list':stations_list, 'sensors':sensors })
 
-#class StationView(DetailView):
-#    model = Stations
-#    template_name = 'console/station.html'
+class StationView(DetailView):
+    model = Stations
+    template_name = 'console/station.html'
+
+"""

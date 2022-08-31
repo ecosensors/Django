@@ -10,6 +10,8 @@ urlpatterns = [
     path('field/<int:idfield>', views.field, name='field'),
     path('field/<int:idfield>/station/<int:idstation>', views.station, name='station'),
     path('field/<int:idfield>/station/<int:idstation>/sensor/<int:idsensor>', views.sensor, name='sensor'),
-    #path('<int:idstation>/sensors', views.sensors, name='sensors'),
-    #path('<int:pk>/station/', views.StationView.as_view(), name='station'),
+    ## Path pour récupérer les Token (attention, il faudra ajouter des import: import TokenRefrehView et MyObtainTokenPairView
+    ## from rest_framework_simplejwt.views import TokenRefreshView
+    #path('token/', MyObtainTokenPairView.as_view(), name='token_obtain_pair'),
+    #path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
