@@ -7,7 +7,11 @@ from .models import Stations, Measures, Sensors
 from .serializers import SensorsSerializer,MeasuresSerializer,TypesSerializer
 import pickle
 
-""" def sensor can be deleted"""
+""" 
+The script bellow is not used any more.
+I kept it for record
+(can be deleted later)
+"""
 def sensor(request,  idsensor):
     if request.method == 'GET':
         # Get the last measure date/time for that sensor

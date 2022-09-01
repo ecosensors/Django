@@ -13,7 +13,7 @@
 
 
 {% block map %}
-    <h4>Ici, toutes les stations pour le terrain sélectionné, seront affichées.</h4>
+    <h2>{{ field_longname|lower|capfirst }}</h2>
     <div id="map" data-field="{{ id_field }}"></div>
 {% endblock %}
 

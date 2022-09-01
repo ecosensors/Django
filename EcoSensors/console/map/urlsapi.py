@@ -1,7 +1,9 @@
 from django.urls import path
 from . import viewsapi
-from map.viewsets import MarkerViewSet,SensorViewSet
-
+from map.viewsets import MarkerViewSet, SensorViewSet, TestTokenViewSet
+"""
+    urlpatterns for the API
+"""
 app_name="map"
 urlpatterns = [
     path("field/<int:idfield>/", MarkerViewSet.as_view({'get': 'list'}), name="marker_view_set"), # Work with Django Rest Framework
@@ -9,9 +11,9 @@ urlpatterns = [
     #path('sensor/<int:idsensor>/', viewsapi.sensor, name='apiSensor'),
     # New version 1
     path("sensor/<int:idsensor>/", SensorViewSet.as_view({'get': 'list'}), name="sensor_view_set"),
-    #try
-    #path('sensor/type/<int:idtype>/', viewsapi.type, name='apiType'),
+    # Exercise with Token to protect an API
+    path("testToken/<int:idsensor>/", TestTokenViewSet.as_view({'get': 'list'}), name="testToken_view_set"),
 
-    #path('type/<int:idtype>/', views.api, name='api'),
-    #path('station/<int:idstation>/', views.api, name='api'),
+    # TODO: Create an api to retrive all measures accordinf to the type of sensors
+    #path('sensor/type/<int:idtype>/', viewsapi.type, name='apiType'),
 ]

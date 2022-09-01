@@ -1,6 +1,4 @@
 {% load lib-menu %}
-
-
 {% menuFields as menuField %}
 {% menuStations fieldId as menuStation %}
 
@@ -15,12 +13,12 @@
         {% for field in menuField %}
         <li class="nav-link">
             <i class="la la-map"></i>
-            <a href="{% url 'map:field' field.id_field %}">({{ field.id_field}}){{ field.field_name}}</a>
+            <a href="{% url 'map:field' field.id_field %}">({{ field.id_field}}){{ field.field_name|lower|capfirst}}</a>
         </li>
         {% endfor %}
     </ul>
 {% else %}
-    <p>No fields are availableccc.</p>
+    <p>No fields are available.</p>
 {% endif %}
 
 
@@ -32,14 +30,14 @@
         <li class="nav-link l1">
             <i class="la la-object-group"></i>
             <a href="{% url 'map:station' station.fields_id_field station.id_station %}">
-                [{{ station.id_station }}] {{ station.station_longname }}
+                [{{ station.id_station }}] {{ station.station_longname|lower|capfirst }}
             </a>
             <ul>
                 {% for se in station.sondes  %}
                 <li class="nav-link l2">
                     <i class="la la-feed"></i>
                     <a href="{% url 'map:sensor' station.fields_id_field station.id_station se.id_sensor %}">
-                        {{ se.sensor_longname }}
+                        {{ se.sensor_longname|lower|capfirst }}
                     </a>
                 </li>
                 {% empty %}

@@ -15,11 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-#from map.viewsets import MarkerViewSet
+from rest_framework_simplejwt.views import TokenRefreshView
+from map.viewsets import MyObtainTokenPairView
 
 urlpatterns = [
     path('', include('map.urls')),
     path('admin/', admin.site.urls),
     path('map/', include('map.urls')),
     path('api/map/', include('map.urlsapi')),
+    ## Path pour récupérer les Token (attention
+    path('token/', MyObtainTokenPairView.as_view(), name='token_obtain_pair'),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]

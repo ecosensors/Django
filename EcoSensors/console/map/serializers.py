@@ -1,4 +1,5 @@
 """Markers serializers."""
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 """
  Maps with Django (2)
@@ -46,10 +47,10 @@ class TypesSerializer(ser.ModelSerializer):
         fields = ("id_sensor", "sensor_name","sensor_types_id_sensor_type")
         model = Sensors
 
-"""
-# NOTES
 
-## USEFULL FOR THE REST API (Not tested yet)
+"""
+TOKEN
+"""
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
     @classmethod
@@ -60,6 +61,11 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token['username'] = user.username
         return token
 
+
+
+
+"""
+# NOTES
 
 ## Previous Exercise
 from rest_framework import routers,serializers,viewsets
