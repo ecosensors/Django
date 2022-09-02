@@ -1,3 +1,8 @@
+/*
+* Django © 2022 by Pierre Amey is licensed under CC BY-NC-SA 4.0
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND
+*/
+
 $(document).ready(function(){
     var mychart=null;
     /*
@@ -21,6 +26,8 @@ function show_graph(chart){
             * See: station.html template
             * See: station view
              */
+
+             // TODO this part need to be improved (make sure that the script us call from the template and not from the base.html)
             if(chart.attr('data-chart')=="station")
             {
                 console.log("VIEW: station");

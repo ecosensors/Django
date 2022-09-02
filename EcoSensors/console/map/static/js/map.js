@@ -1,4 +1,9 @@
 /*
+* Django © 2022 by Pierre Amey is licensed under CC BY-NC-SA 4.0
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND
+*/
+
+/*
 * Leaflet
 */
 
