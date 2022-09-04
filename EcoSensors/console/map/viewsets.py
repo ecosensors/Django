@@ -2,6 +2,8 @@
 Django © 2022 by Pierre Amey is licensed under CC BY-NC-SA 4.0
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND
 """
+from django.db.models import Prefetch
+
 """Markers API views."""
 # Maps with Django (2)
 # https://www.paulox.net/2021/07/19/maps-with-django-part-2-geodjango-postgis-and-leaflet/
@@ -10,12 +12,13 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework_gis import filters
 from datetime import datetime, timedelta
-
 from rest_framework_simplejwt.views import TokenObtainPairView
 
-from map.models import Stations, Measures
-from map.serializers import StationsSerializer, MeasuresSerializer, MyTokenObtainPairSerializer
+from map.models import Stations, Measures, SensorTypes, Sensors
+from map.serializers import StationsSerializer, MeasuresSerializer, TypesSerializer, MyTokenObtainPairSerializer
 
+from django.core import serializers
+from django.http import HttpResponse
 
 class MarkerViewSet(viewsets.ReadOnlyModelViewSet):
     """
@@ -38,10 +41,12 @@ class MarkerViewSet(viewsets.ReadOnlyModelViewSet):
             return Stations.objects.filter(station_active=1, map=1)
 
 
-
 class SensorViewSet(viewsets.ReadOnlyModelViewSet):
     """
-    API: return the measures of a sensors according to the ID of the sensor and a date range
+    API: return the measures of a sensors according to the ID of the sensor and a date range.
+    If the time 'end' is empty, the script search for the latest save measure and return the date/time.
+    If the time 'start' is empty, the start time take the value of the end time, minus 3 days.
+    Time is UTC zone (Universal Time Coordinated)
     """
     # See serializers.py
     serializer_class = MeasuresSerializer
@@ -81,6 +86,60 @@ class SensorViewSet(viewsets.ReadOnlyModelViewSet):
 
         #print(sensor_measures)
         return sensor_measures
+
+
+class TypeViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    API: return the measures of several sensors according to a type of sensors for a selected field, and a date range.
+    (A type is generaly sensors with the same unit (°C, %, kPa))
+    If the time 'end' is empty, the today time will be considered
+    If the time 'start' is empty, the start time will take the value of the end time, minus 3 days.
+    Time is UTC zone (Universal Time Coordinated)
+    """
+    # See serializers.py
+    serializer_class = MeasuresSerializer
+
+    def get_queryset(self):
+        # get the params
+        idt = self.kwargs['idtype']
+        idf = self.kwargs['idfield']
+        # get the date "from"
+        start = self.request.query_params.get('start')
+        # get the date "to"
+        end = self.request.query_params.get('end')
+
+        if end is None or len(end) <= 0:
+            end = datetime.datetime.now()
+        else:
+            end = datetime.strptime(end, '%Y-%m-%d %H:%M:%S')
+
+        if start is None or len(start) <= 0:
+            start = end - timedelta(days=3)
+        else:
+            start = datetime.strptime(start, '%Y-%m-%d %H:%M:%S')
+
+
+        """
+        type = SensorTypes.objects.filter(id_sensor_type=idt)
+        
+        sensors = Sensors.objects.filter(sensor_types_id_sensor_type=idt)\
+            .select_related('sensor_types_id_sensor_type')
+
+        print(sensors[0].id_sensor)
+        
+
+        for sensor in sensors:
+            print(sensor.id_sensor)
+        """
+
+        m = Measures.objects.filter(
+            sensors_id_sensor__stations_id_station__fields_id_field=idf,
+            sensors_id_sensor__sensor_types_id_sensor_type=idt,
+            measure_created__range=[start, end]
+        ).order_by('measure_created')
+
+        return m
+
 
 
 """
