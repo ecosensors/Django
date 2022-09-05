@@ -15,7 +15,7 @@ from datetime import datetime, timedelta
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 from map.models import Stations, Measures, SensorTypes, Sensors
-from map.serializers import StationsSerializer, MeasuresSerializer, TypesSerializer, MyTokenObtainPairSerializer
+from map.serializers import StationsSerializer, MeasuresSerializer, MyTokenObtainPairSerializer
 
 from django.core import serializers
 from django.http import HttpResponse
@@ -91,7 +91,8 @@ class SensorViewSet(viewsets.ReadOnlyModelViewSet):
 class TypeViewSet(viewsets.ReadOnlyModelViewSet):
     """
     API: return the measures of several sensors according to a type of sensors for a selected field, and a date range.
-    (A type is generaly sensors with the same unit (°C, %, kPa))
+    (A type is generally sensors with the same unit (°C, %, kPa))
+    The returned value are shorted 1) by stations ASC, then by sensors (ASC) and by date (ASC)
     If the time 'end' is empty, the today time will be considered
     If the time 'start' is empty, the start time will take the value of the end time, minus 3 days.
     Time is UTC zone (Universal Time Coordinated)
@@ -118,27 +119,19 @@ class TypeViewSet(viewsets.ReadOnlyModelViewSet):
         else:
             start = datetime.strptime(start, '%Y-%m-%d %H:%M:%S')
 
-
-        """
-        type = SensorTypes.objects.filter(id_sensor_type=idt)
-        
-        sensors = Sensors.objects.filter(sensor_types_id_sensor_type=idt)\
-            .select_related('sensor_types_id_sensor_type')
-
-        print(sensors[0].id_sensor)
-        
-
-        for sensor in sensors:
-            print(sensor.id_sensor)
-        """
-
-        m = Measures.objects.filter(
+        measures = Measures.objects.filter(
             sensors_id_sensor__stations_id_station__fields_id_field=idf,
             sensors_id_sensor__sensor_types_id_sensor_type=idt,
+            sensors_id_sensor__sensor_active=1,
             measure_created__range=[start, end]
-        ).order_by('measure_created')
+        ).order_by(
+                'sensors_id_sensor__stations_id_station',
+                'sensors_id_sensor',
+                'measure_created',
+                )
 
-        return m
+        #print(measures.query)
+        return measures
 
 
 
