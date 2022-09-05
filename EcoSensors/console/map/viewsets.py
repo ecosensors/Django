@@ -92,7 +92,7 @@ class TypeViewSet(viewsets.ReadOnlyModelViewSet):
     """
     API: return the measures of several sensors according to a type of sensors for a selected field, and a date range.
     (A type is generally sensors with the same unit (°C, %, kPa))
-    The returned value are shorted 1) by stations ASC, then by sensors (ASC) and by date (ASC)
+    The returned value are sorted by stations (ASC), then by sensors (ASC) and by date (ASC)
     If the time 'end' is empty, the today time will be considered
     If the time 'start' is empty, the start time will take the value of the end time, minus 3 days.
     Time is UTC zone (Universal Time Coordinated)
