@@ -2,18 +2,18 @@
 {% menuFields as menuField %}
 {% menuStations fieldId as menuStation %}
 
+
+
 {% if menuField %}
     <h4>Terrains</h4>
-    <ul class="nav flex-column">
-        <li class="nav-link">
-            <i class="la la-map"></i>
-            <a href="{% url 'map:index' %}">TOUS</a>
+    <ul class="">
+        <li class="li-1">
+            <a class="" href="{% url 'map:index' %}">TOUS</a>
         </li>
 
         {% for field in menuField %}
-        <li class="nav-link">
-            <i class="la la-map"></i>
-            <a href="{% url 'map:field' field.id_field %}">({{ field.id_field}}){{ field.field_name|lower|capfirst}}</a>
+        <li class="li-1">
+            <a class="" href="{% url 'map:field' field.id_field %}">({{ field.id_field}}){{ field.field_name|lower|capfirst}}</a>
         </li>
         {% endfor %}
     </ul>
@@ -25,27 +25,33 @@
 
 {% if menuStation %}
     <h4>Stations</h4>
-    <ul class="nav flex-column">
+    <ul class="" style="background-color:black">
         {% for station in menuStation %}
-        <li class="nav-link l1">
-            <i class="la la-object-group"></i>
-            <a href="{% url 'map:station' station.fields_id_field station.id_station %}">
-                [{{ station.id_station }}] {{ station.station_longname|lower|capfirst }}
-            </a>
-            <ul>
+        <li class="haschildren">
+            <div class="d-flex">
+                <a class="" href="{% url 'map:station' station.fields_id_field station.id_station %}">
+                    [{{ station.id_station }}] {{ station.station_longname|lower|capfirst }}
+                </a>
+                <a aria-label="Expand submenu" href="#" data-aria-label="Expand submenu" data-aria-label-active="Collapse submenu" class="expand">
+                    [2]
+				    <i class="fa icon" aria-hidden="false"></i>
+                </a>
+            </div>
+
+            <ul class="subnav">
                 {% for se in station.sondes  %}
-                <li class="nav-link l2">
-                    <i class="la la-feed"></i>
-                    <a href="{% url 'map:sensor' station.fields_id_field station.id_station se.id_sensor %}">
+                <li class="li-2">
+                    <a class="" href="{% url 'map:sensor' station.fields_id_field station.id_station se.id_sensor %}">
                         {{ se.sensor_longname|lower|capfirst }}
                     </a>
                 </li>
                 {% empty %}
-                <li class="nav-link l2">
+                <li class="li-2">
                     Cette station ne contient pas de sondes
                 </li>
                 {% endfor %}
             </ul>
+
         </li>
         {% endfor %}
     </ul>

@@ -27,70 +27,73 @@ map.
 */
 
 // Projet 2
-const copy = "© <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors";
-const url = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
-const osm = L.tileLayer(url, { attribution: copy });
 
-latlng = L.latLng(46.184610, 6.008253);
-const map = L.map("map", {center: latlng, layers: [osm] });
-//console.log("getBounds: ",map.getBounds().toBBoxString())
 
-var markers = L.markerClusterGroup({
-    spiderfyOnMaxZoom: false,
-    showCoverageOnHover: false
-});
+if($("#map").length > 0){
+    const copy = "© <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors";
+    const url = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+    const osm = L.tileLayer(url, { attribution: copy });
 
-render_markers();
+    latlng = L.latLng(46.184610, 6.008253);
+    const map = L.map("map", {center: latlng, layers: [osm] });
+    //console.log("getBounds: ",map.getBounds().toBBoxString())
 
-async function load_markers() {
-    //const markers_url = `/api/map/?in_bbox=${map.getBounds().toBBoxString()}`;
-    const markers_url = `/api/map/field/` + $('#map').attr('data-field') +`/`; // $('#map').attr('data-field')
-    //console.log("data-field: ", $('#map').attr('data-field'));
-    //console.log("markers_url: ",markers_url);
-    const response = await fetch(markers_url);
-    //console.log("response: ",response);
-    const geojson = await response.json();
-    //console.log("geojson: ",geojson);
-    return geojson;
-}
+    var markers = L.markerClusterGroup({
+        spiderfyOnMaxZoom: false,
+        showCoverageOnHover: false
+    });
 
-async function render_markers() {
-    const marker_s = await load_markers();      // Get all markers
+    render_markers();
 
-    /*
-    * Leaflet.markercluster
-    */
-    var geoJsonLayer = L.geoJson(marker_s, {
-	    onEachFeature: function (feature, layer) {
-		    layer.bindPopup(feature.properties.station_longname);
-		}
-	});
-
-    markers.addLayer(geoJsonLayer);
-    map.addLayer(markers);                      // Add the layer to the Map
-
-    /*
-    * Get the marker lat/lng to have all stations centralized in the map frame
-    */
-    var boundsMarkers = []; // Get all lat and lng of markers / stations
-    for (var i = 0; i < marker_s['features'].length ; i++){
-        lat = marker_s['features'][i].geometry.coordinates[1];
-        lng = marker_s['features'][i].geometry.coordinates[0];
-        //console.log("lat: ", lat, "lng: ", lng);
-        boundsMarkers.push(L.latLng(lat, lng));
+    async function load_markers() {
+        //const markers_url = `/api/map/?in_bbox=${map.getBounds().toBBoxString()}`;
+        const markers_url = `/api/map/field/` + $('#map').attr('data-field') +`/`; // $('#map').attr('data-field')
+        //console.log("data-field: ", $('#map').attr('data-field'));
+        //console.log("markers_url: ",markers_url);
+        const response = await fetch(markers_url);
+        //console.log("response: ",response);
+        const geojson = await response.json();
+        //console.log("geojson: ",geojson);
+        return geojson;
     }
 
-    bounds = L.latLngBounds(boundsMarkers);
-    map.fitBounds(bounds,{ padding: [10, 10] });    // Fit the map according to the position of the stations
+    async function render_markers() {
+        const marker_s = await load_markers();      // Get all markers
 
-    /*
-    // Keep for record
-    L.geoJson(marker_s)
-    .bindPopup((layer) => layer.feature.properties.station_longname)
-    .addTo(map);
-    */
+        /*
+        * Leaflet.markercluster
+        */
+        var geoJsonLayer = L.geoJson(marker_s, {
+            onEachFeature: function (feature, layer) {
+                layer.bindPopup(feature.properties.station_longname);
+            }
+        });
 
+        markers.addLayer(geoJsonLayer);
+        map.addLayer(markers);                      // Add the layer to the Map
+
+        /*
+        * Get the marker lat/lng to have all stations centralized in the map frame
+        */
+        var boundsMarkers = []; // Get all lat and lng of markers / stations
+        for (var i = 0; i < marker_s['features'].length ; i++){
+            lat = marker_s['features'][i].geometry.coordinates[1];
+            lng = marker_s['features'][i].geometry.coordinates[0];
+            //console.log("lat: ", lat, "lng: ", lng);
+            boundsMarkers.push(L.latLng(lat, lng));
+        }
+
+        bounds = L.latLngBounds(boundsMarkers);
+        map.fitBounds(bounds,{ padding: [10, 10] });    // Fit the map according to the position of the stations
+
+        /*
+        // Keep for record
+        L.geoJson(marker_s)
+        .bindPopup((layer) => layer.feature.properties.station_longname)
+        .addTo(map);
+        */
+
+    }
+
+    //map.on("moveend", render_markers);
 }
-
-//map.on("moveend", render_markers);
-

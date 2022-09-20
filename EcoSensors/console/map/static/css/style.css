@@ -20,12 +20,31 @@ ul{
     padding:0px;
 }
 li{
-    margin-left:15px;
+    /*margin-left:15px;*/
 }
 
 table{
     width:100%;
 }
+
+.grid-container{
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: 300px 1fr;
+
+}
+.sticky-top.grid-container .grid-item:nth-child(2){
+    justify-self: end;
+}
+.grid-item{
+    border:1px solid red;
+}
+
+#btn-toggle{
+    display:none;
+}
+
+/* MENU */
 
 
 
@@ -47,49 +66,9 @@ header{
 /*
 * NAV
 */
-#slider h4:first-child{
-    margin-top: 15px;
-}
-nav ul{
-    padding:0px;
-    margin:0px;
-}
-nav ul li.nav-link{
-    margin:0px;
-    padding-left:8px !important;
-    list-style-type: none;
-}
-
-nav ul li.nav-link.l2{
-    margin-left:0px;
-}
-
-nav ul li.nav-link a{
-    color:#83848a;
-}
-nav ul li.nav-link.l2 a{
-    margin-left:0px !important;
-}
-
-nav ul li.nav-link i{
-    color:#333333;
-}
 
 
-.cont #slider, .cont #content{
-    /*
-    display: flex;
-    flex-wrap:nowrap;
-    */
-}
 
-#slider{
-    padding-top:20px;
-    /*
-    flex: 0 0 38%;
-    max-width: 200px;
-    */
-}
 #content{
     /*
     flex: 1 1 1%;

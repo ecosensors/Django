@@ -3,6 +3,8 @@
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND
 */
 
+
+
 $(document).ready(function(){
     var mychart=null;
     /*
@@ -13,7 +15,25 @@ $(document).ready(function(){
         show_graph(chart);
     }
 
+
+
 })
+
+
+/*
+Flypanels
+*/
+/*
+document.addEventListener('DOMContentLoaded', function (event) {
+	flyPanels.init({
+		onInit: function () {
+			fpm_treemenu.init();
+		}
+	});
+
+});
+*/
+
 
 function show_graph(chart){
         console.log("DEBUG: show_graph")

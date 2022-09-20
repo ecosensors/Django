@@ -4,15 +4,14 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND
 -->
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
     {% block title %}
         <title>EcoMap - Eco Sensors</title>
     {% endblock %}
-
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
 
     {% load static %}
@@ -21,55 +20,349 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND
     <link rel="stylesheet" type="text/css" href="{% static 'js/leaflet-1-8-0/leaflet.css' %}">
     <link rel="stylesheet" href="{% static 'js/Leaflet-markercluster-1.4.1/dist/MarkerCluster.Default.css' %}" />
 	<link rel="stylesheet" href="{% static 'js/Leaflet-markercluster-1.4.1/dist/MarkerCluster.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/flypanels/flypanels.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+
     <link rel="stylesheet" type="text/css" href="{% static 'css/map.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/ready.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/media.css' %}">
 </head>
 <body>
 
-    <header class="sticky-top py-2 ">
-        <div class="row g-0">
-                <div class="col-md-2">
-                    <a class="col-md-3 col-lg-2 me-0 px-3 fs-6" href="#">
-                        <img src="{% static '/images/logo-eco-sensors-small.png' %}" alt="Eco Sensors" />
-                    </a>
-                </div>
-                <div class="col-md-3 ms-auto">
-                    <input name="from" type="date" />
-                    <input name="to" type="date" />
-                </div>
-            </div>
+    <header class="sticky-top py-2 container-fluid grid-container">
+        <section class="grid-item">
+            <a class="" href="#">
+                <img src="{% static '/images/logo-eco-sensors-small.png' %}" alt="Eco Sensors" />
+            </a>
+        </section>
+        <section class="grid-item">
+                <input name="from" type="date" />
+                <input name="to" type="date" />
+        </section>
     </header>
 
-    <div class="container-fluid">
+    <section class="container-fluid grid-container">
+        <aside class="grid-item">
+            <!--<botton id="btn-toggle"><i class="la la-bars"></i></botton>-->
+<p>----</p>
+				<div class="flypanels-inner" style="background-color:black !important">
+					<nav class="flypanels-treemenu" role="navigation" aria-label="Main navigation">
+						<ul role="tree">
+							<li class="haschildren" role="treeitem" aria-expanded="false">
+								<div>
+									<a href="#" class="link">Example menu item 1</a>
+									<a aria-label="Expand submenu" href="#" data-aria-label="Expand submenu" data-aria-label-active="Collapse submenu" class="expand">
+										2
+										<i class="fa icon" aria-hidden="true"></i>
+									</a>
+								</div>
+								<ul role="group" aria-hidden="true" hidden="">
+									<li>
+										<div><a href="#" class="link">Example menu item 1.1</a></div>
+									</li>
+									<li>
+										<div><a href="#" class="link">Example menu item 1.2</a></div>
+									</li>
+									<li>
+										<div><a href="#" class="link">Example menu item</a></div>
+									</li>
+									<li>
+										<div><a href="#" class="link">Example menu item</a></div>
+									</li>
+									<li>
+										<div><a href="#" class="link">Example menu item</a></div>
+									</li>
+									<li>
+										<div><a href="#" class="link">Example menu item</a></div>
+									</li>
+									<li>
+										<div><a href="#" class="link">Example menu item</a></div>
+									</li>
+									<li>
+										<div><a href="#" class="link">Example menu item</a></div>
+									</li>
+									<li>
+										<div><a href="#" class="link">Example menu item</a></div>
+									</li>
+									<li>
+										<div><a href="#" class="link">Example menu item</a></div>
+									</li>
+									<li>
+										<div><a href="#" class="link">Example menu item</a></div>
+									</li>
+									<li>
+										<div><a href="#" class="link">Example menu item</a></div>
+									</li>
+									<li>
+										<div><a href="#" class="link">Example menu item</a></div>
+									</li>
+									<li>
+										<div><a href="#" class="link">Example menu item</a></div>
+									</li>
+									<li>
+										<div><a href="#" class="link">Example menu item</a></div>
+									</li>
+									<li>
+										<div><a href="#" class="link">Example menu item</a></div>
+									</li>
+									<li>
+										<div><a href="#" class="link">Example menu item</a></div>
+									</li>
+									<li>
+										<div><a href="#" class="link">Example menu item</a></div>
+									</li>
+									<li>
+										<div><a href="#" class="link">Example menu item</a></div>
+									</li>
+									<li>
+										<div><a href="#" class="link">Example menu item</a></div>
+									</li>
+									<li>
+										<div><a href="#" class="link">Example menu item</a></div>
+									</li>
+									<li>
+										<div><a href="#" class="link">Example menu item</a></div>
+									</li>
+								</ul>
+							</li>
+							<li class="haschildren" aria-expanded="false">
+								<div class="link">
+									<a href="#" class="link">Example menu item 2</a><a aria-label="Expand submenu" href="#" data-aria-label="Expand submenu" data-aria-label-active="Collapse submenu" class="expand">5<i class="fa icon" aria-hidden="true"></i></a>
+								</div>
+								<ul role="group" aria-hidden="true" hidden="">
+									<li class="haschildren" aria-expanded="false">
+										<div class="link">
+											<a href="#" class="link">Example menu item 2.1.1</a><a aria-label="Expand submenu" href="#" data-aria-label="Expand submenu" data-aria-label-active="Collapse submenu" class="expand">6<i class="fa icon" aria-hidden="true"></i></a>
+										</div>
+										<ul role="group" aria-hidden="true" hidden="">
+											<li class="active">
+												<div><a href="#" class="link">Example menu item 2.1.1</a></div>
+											</li>
+											<li>
+												<div><a href="#" class="link">Example menu item 2.1.2</a></div>
+											</li>
+											<li>
+												<div><a href="#" class="link">Example menu item</a></div>
+											</li>
+											<li>
+												<div><a href="#" class="link">Example menu item</a></div>
+											</li>
+											<li>
+												<div><a href="#" class="link">Example menu item</a></div>
+											</li>
+											<li>
+												<div><a href="#" class="link">Example menu item</a></div>
+											</li>
+										</ul>
+									</li>
+									<li class="haschildren" aria-expanded="false">
+										<div class="link">
+											<a href="#" class="link">Example menu item 2.2.1</a><a aria-label="Expand submenu" href="#" data-aria-label="Expand submenu" data-aria-label-active="Collapse submenu" class="expand">11<i class="fa icon" aria-hidden="true"></i></a>
+										</div>
+										<ul role="group" aria-hidden="true" hidden="">
+											<li>
+												<div><a href="#" class="link">Example menu item</a></div>
+											</li>
+											<li class="haschildren" aria-expanded="false">
+												<div class="link">
+													<a href="#" class="link">Example menu item2.2.2</a><a aria-label="Expand submenu" href="#" data-aria-label="Expand submenu" data-aria-label-active="Collapse submenu" class="expand">8<i class="fa icon" aria-hidden="true"></i></a>
+												</div>
+												<ul role="group" aria-hidden="true" hidden="">
+													<li>
+														<div><a href="#" class="link">Example menu item</a></div>
+													</li>
+													<li>
+														<div><a href="#" class="link">Example menu item</a></div>
+													</li>
+													<li>
+														<div><a href="#" class="link">Example menu item</a></div>
+													</li>
+													<li>
+														<div><a href="#" class="link">Example menu item</a></div>
+													</li>
+													<li>
+														<div><a href="#" class="link">Example menu item</a></div>
+													</li>
+													<li>
+														<div><a href="#" class="link">Example menu item</a></div>
+													</li>
+													<li>
+														<div><a href="#" class="link">Example menu item</a></div>
+													</li>
+													<li>
+														<div><a href="#" class="link">Example menu item</a></div>
+													</li>
+												</ul>
+											</li>
+											<li class="haschildren" aria-expanded="false">
+												<div class="link">
+													<a href="#" class="link">Example menu item</a><a aria-label="Expand submenu" href="#" data-aria-label="Expand submenu" data-aria-label-active="Collapse submenu" class="expand">11<i class="fa icon" aria-hidden="true"></i></a>
+												</div>
+												<ul role="group" aria-hidden="true" hidden="">
+													<li>
+														<div><a href="#" class="link">Example menu item</a></div>
+													</li>
+													<li class="haschildren" aria-expanded="false">
+														<div class="link">
+															<a href="#" class="link">Example menu item</a><a aria-label="Expand submenu" href="#" data-aria-label="Expand submenu" data-aria-label-active="Collapse submenu" class="expand">11<i class="fa icon" aria-hidden="true"></i></a>
+														</div>
+														<ul role="group" aria-hidden="true" hidden="">
+															<li>
+																<div><a href="#" class="link">Example menu item</a></div>
+															</li>
+															<li>
+																<div><a href="#" class="link">Example menu item</a></div>
+															</li>
+															<li>
+																<div><a href="#" class="link">Example menu item</a></div>
+															</li>
+															<li>
+																<div><a href="#" class="link">Example menu item</a></div>
+															</li>
+															<li>
+																<div><a href="#" class="link">Example menu item</a></div>
+															</li>
+															<li>
+																<div><a href="#" class="link">Example menu item</a></div>
+															</li>
+															<li>
+																<div><a href="#" class="link">Example menu item</a></div>
+															</li>
+															<li>
+																<div><a href="#" class="link">Example menu item</a></div>
+															</li>
+															<li>
+																<div><a href="#" class="link">Example menu item</a></div>
+															</li>
+															<li>
+																<div><a href="#" class="link">Example menu item</a></div>
+															</li>
+															<li>
+																<div><a href="#" class="link">Example menu item</a></div>
+															</li>
+														</ul>
+													</li>
+													<li class="haschildren" aria-expanded="false">
+														<div class="link">
+															<a href="#" class="link">Example menu item</a><a aria-label="Expand submenu" href="#" data-aria-label="Expand submenu" data-aria-label-active="Collapse submenu" class="expand">11<i class="fa icon" aria-hidden="true"></i></a>
+														</div>
+														<ul role="group" aria-hidden="true" hidden="">
+															<li>
+																<div><a href="#" class="link">Example menu item</a></div>
+															</li>
+															<li>
+																<div><a href="#" class="link">Example menu item</a></div>
+															</li>
+														</ul>
+													</li>
+													<li>
+														<div><a href="#" class="link">Example menu item</a></div>
+													</li>
+												</ul>
+											</li>
+											<li>
+												<div><a href="#" class="link">Example menu item</a></div>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<div><a href="#" class="link">Example menu item</a></div>
+									</li>
+									<li class="haschildren" aria-expanded="false">
+										<div class="link">
+											<a href="#" class="link">Example menu item</a><a aria-label="Expand submenu" href="#" data-aria-label="Expand submenu" data-aria-label-active="Collapse submenu" class="expand">5<i class="fa icon" aria-hidden="true"></i></a>
+										</div>
+										<ul role="group" aria-hidden="true" hidden="">
+											<li>
+												<div><a href="#" class="link">Example menu item</a></div>
+											</li>
+											<li>
+												<div><a href="#" class="link">Example menu item</a></div>
+											</li>
+											<li>
+												<div><a href="#" class="link">Example menu item</a></div>
+											</li>
+											<li>
+												<div><a href="#" class="link">Example menu item</a></div>
+											</li>
+											<li>
+												<div><a href="#" class="link">Example menu item</a></div>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+							<li class="haschildren" aria-expanded="false">
+								<div class="link">
+									<a href="#" class="link">Example menu item</a><a aria-label="Expand submenu" href="#" data-aria-label="Expand submenu" data-aria-label-active="Collapse submenu" class="expand">1<i class="fa icon" aria-hidden="true"></i></a>
+								</div>
+								<ul role="group" aria-hidden="true" hidden="">
+									<li>
+										<div><a href="#" class="link">Example menu item</a></div>
+									</li>
+								</ul>
+							</li>
+							<li>
+								<div><a href="#" class="link">Example menu item</a></div>
+							</li>
+							<li>
+								<div><a href="#" class="link">Example menu item</a></div>
+							</li>
+							<li class="haschildren" aria-expanded="false">
+								<div class="link">
+									<a href="#" class="link">Example menu item</a><a aria-label="Expand submenu" href="#" data-aria-label="Expand submenu" data-aria-label-active="Collapse submenu" class="expand">4<i class="fa icon" aria-hidden="true"></i></a>
+								</div>
+								<ul role="group" aria-hidden="true" hidden="">
+									<li>
+										<div><a href="#" class="link">Example menu item</a></div>
+									</li>
+									<li>
+										<div><a href="#" class="link">Example menu item</a></div>
+									</li>
+									<li>
+										<div><a href="#" class="link">Example menu item</a></div>
+									</li>
+									<li>
+										<div><a href="#" class="link">Example menu item</a></div>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</nav>
+				</div>
 
 
-        <div class="row">
-            <div id="slider" class="col-md-2">
-                <nav class="navbar">
+
+
+
+
+
+
+            <nav class="" role="navigation" aria-label="Main navigation">
                 {% block menu %}
                     Menu
                 {% endblock %}
-                </nav>
-            </div>
-            <div id="content" class="col-md-10">
-                <noscript>JavaScript must be activate</noscript>
+            </nav>
 
+        </aside>
+        <main id="content" class="grid-item">
+            <noscript>JavaScript must be activate</noscript>
                 {% block map %}
                 {% endblock %}
 
                 {% block content %}
-                    content
+                    Block content
                 {% endblock %}
-            </div>
-        </div>
+        </main>
+    </section>
 
-		<bottom>
-			<address>
-				.
-			</address>
-		</bottom>
-	</div>
+	<bottom>
+        <i class="la la-html5"></i>
+        <i class="la la-css3"></i>
+        <i class="">&copy; Pierre Amey</i>
+    </bottom>
+
 
     <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
 	<script src="{% static 'js/bootstrap-5-2-0/bootstrap.bundle.min.js' %}"></script>
@@ -81,11 +374,16 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND
     <script src="{% static 'js/Leaflet-markercluster-1.4.1/dist/leaflet.markercluster-src.js' %}"></script>
     <script src="{% static 'js/map.js' %}"></script>
 
+<!--    <script src="{% static 'js/flypanels/flypanels.js' %}"></script>-->
+<!--	<script src="{% static 'js/flypanels/modules/fpm.treemenu.js' %}"></script>-->
+
+
+
     <!-- Vuejs -->
-    <script src="{% static 'js/vuejs/vue.global.js' %}"></script>
+    <!--<script src="{% static 'js/vuejs/vue.global.js' %}"></script>-->
     <!-- main js script for vue -->
-    <script src="{% static 'js/vuejs/main.js' %}"></script>
-    <script src="{% static 'js/vuejs/component/stations.js' %}"></script>
+    <!--<script src="{% static 'js/vuejs/main.js' %}"></script>
+    <script src="{% static 'js/vuejs/component/stations.js' %}"></script>-->
     <!--<script src="{% static 'js/vuejs/component/carte_del.js' %}"></script>-->
      <!-- main js script -->
     <script src="{% static 'js/script.js' %}"></script>
@@ -93,6 +391,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND
         if($("#v_app").length > 0){
             //const mountApp = app.mount("#v_app");
         }
+
+
 </script>
 
 

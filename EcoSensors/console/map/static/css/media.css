@@ -1,0 +1,43 @@
+@media screen and (max-width:576px){
+    body{
+        border:1px solid green;
+    }
+}
+
+@media screen and (min-width:576px){ /* sm */
+    body{
+        border:1px solid blue;
+    }
+}
+
+@media screen and (min-width:768px){ /* md */
+    body{
+        border:1px solid yellow;
+    }
+}
+
+@media screen and (min-width:992px){ /* lg */
+    body{
+        border:1px solid red;
+    }
+    /*
+    .grid-container{
+        grid-template-columns: 20px 1fr !important;
+    }
+    #btn-toggle{
+        display:visible;
+    }
+    */
+}
+
+@media screen and (min-width:1200px){ /* xl */
+    body{
+        border:3px solid orange;
+    }
+}
+
+@media screen and (min-width:1400px){ /* xxl */
+    body{
+        border:1px solid brown;
+    }
+}
