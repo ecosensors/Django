@@ -3,6 +3,8 @@ body{
     font-family: 'nunito', Arial, Helvetica, sans-serif;
     font-size: 14px;
     color: #575962;
+    margin:0px;
+    padding:0px;
 }
 
 h1{
@@ -23,10 +25,60 @@ li{
     /*margin-left:15px;*/
 }
 
+.sticky-top {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index:9000;
+}
+
+section.container{
+    margin-top:50px;
+}
+
 table{
     width:100%;
 }
+.container{
+    padding:10px;
+}
+/* CSS FLEX */
 
+.flex-container, #charts{
+    display:flex;
+    flex-direction: row;
+}
+
+article .card{
+    flex: 0 1 auto;
+}
+.flex-left{
+    flex: 0 0 270px;
+}
+
+.flex-right{
+    flex: 1 1 auto;
+}
+
+.flex-item{
+}
+
+header{
+    border-bottom: 1px solid #eee;
+    background:#fff;
+}
+
+#content, aside{
+    padding-top:40px;
+}
+
+.card{
+    /*margin:10px;*/
+}
+
+
+/*
+CSS FRID
 .grid-container{
     display: grid;
     grid-gap: 10px;
@@ -36,17 +88,11 @@ table{
 .sticky-top.grid-container .grid-item:nth-child(2){
     justify-self: end;
 }
+
 .grid-item{
     border:1px solid red;
 }
-
-#btn-toggle{
-    display:none;
-}
-
-/* MENU */
-
-
+*/
 
 /* VUEJS */
 .activeButton{
@@ -58,22 +104,5 @@ table{
 
 /* END VUEJS */
 
-header{
-    border-bottom: 1px solid #eee;
-    background:#fff;
-}
 
-/*
-* NAV
-*/
-
-
-
-#content{
-    /*
-    flex: 1 1 1%;
-    */
-    padding-top:20px;
-}
-*/
 

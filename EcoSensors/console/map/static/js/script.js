@@ -14,9 +14,6 @@ $(document).ready(function(){
     if(chart.length > 0){
         show_graph(chart);
     }
-
-
-
 })
 
 
@@ -87,7 +84,7 @@ function show_graph(chart){
                     };
 
                     $('#' + sensor_id_class).remove();
-                    $('div.' + sensor_id_class +' div.container-sensor').append('<canvas class="canvas" id="' + sensor_id_class + '"></canvas>');
+                    $('article.' + sensor_id_class +' div.container-sensor').append('<canvas class="canvas" id="' + sensor_id_class + '"></canvas>');
 
                     var ctx = document.getElementById(sensor_id_class).getContext('2d');
                     var conf = config(datas, unit);

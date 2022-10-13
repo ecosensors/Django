@@ -1,61 +1,76 @@
 {% load lib-menu %}
 {% menuFields as menuField %}
-{% menuStations fieldId as menuStation %}
-
-
 
 {% if menuField %}
-    <h4>Terrains</h4>
-    <ul class="">
-        <li class="li-1">
-            <a class="" href="{% url 'map:index' %}">TOUS</a>
-        </li>
+<div id="f-menu-vertical">
+    <nav class="vhamburger">
+        <ul>
+            <li>
+                <div>
+                    <a href="#" class="dropdown-toggle" aria-expanded="false">
+                        <i class="fa fa-navicon"></i>
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <nav class="menu hide" role="navigation" aria-label="Main navigation"> <!-- the hide class is mantadory -->
+        <ul>
+            <li class="level-1">
+                <div>
+                    <a href="{% url 'map:index' %}">Tous</a>
+                </div>
+            </li>
 
-        {% for field in menuField %}
-        <li class="li-1">
-            <a class="" href="{% url 'map:field' field.id_field %}">({{ field.id_field}}){{ field.field_name|lower|capfirst}}</a>
-        </li>
-        {% endfor %}
-    </ul>
+            {% for field in menuField %}
+            {% menuStations field.id_field as menuStation %}
+            <li class="hasChildren level-1">
+                <div>
+                    <a href="{% url 'map:field' field.id_field %}">({{ field.id_field}}){{ field.field_name|lower|capfirst}}</a>
+                    <a href="#" class="dropdown-toggle" aria-expanded="false">
+                        {% for ms in menuStation %}
+                            {% if forloop.last %}
+                                {{ forloop.counter }}
+                            {% endif %}
+                        {% endfor %}
+                        <i class="fa fa-angle-down"></i>
+                    </a>
+                </div>
+                <ul class="sub-menu" role="group">
+                    {% for station in menuStation %}
+                    <li class="hasChildren level-2">
+                        <div>
+                            <a href="{% url 'map:station' station.fields_id_field station.id_station %}">
+                                [{{ station.id_station }}] {{ station.station_longname|lower|capfirst|slice:":15" }}
+                            </a>
+                            <a href="#" class="dropdown-toggle" aria-expanded="false">
+                                {% for stso in station.sondes  %}
+                                    {% if forloop.last %}
+                                        {{ forloop.counter }}
+                                    {% endif %}
+                                {% endfor %}
+                                <i class="fa fa-angle-down"></i>
+                            </a>
+                        </div>
+                        <ul class="sub-menu" role="group">
+                            {% for se in station.sondes  %}
+                            <li class="level-3">
+                                <div>
+                                    <a href="{% url 'map:sensor' station.fields_id_field station.id_station se.id_sensor %}">
+                                        {{ se.sensor_longname|lower|capfirst|slice:":15" }}
+                                    </a>
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </li>
+            {% endfor %}
+        </ul>
+    </nav>
+</div> <!-- end of <div id="f-menu-vertical"> -->
 {% else %}
     <p>No fields are available.</p>
-{% endif %}
-
-
-
-{% if menuStation %}
-    <h4>Stations</h4>
-    <ul class="" style="background-color:black">
-        {% for station in menuStation %}
-        <li class="haschildren">
-            <div class="d-flex">
-                <a class="" href="{% url 'map:station' station.fields_id_field station.id_station %}">
-                    [{{ station.id_station }}] {{ station.station_longname|lower|capfirst }}
-                </a>
-                <a aria-label="Expand submenu" href="#" data-aria-label="Expand submenu" data-aria-label-active="Collapse submenu" class="expand">
-                    [2]
-				    <i class="fa icon" aria-hidden="false"></i>
-                </a>
-            </div>
-
-            <ul class="subnav">
-                {% for se in station.sondes  %}
-                <li class="li-2">
-                    <a class="" href="{% url 'map:sensor' station.fields_id_field station.id_station se.id_sensor %}">
-                        {{ se.sensor_longname|lower|capfirst }}
-                    </a>
-                </li>
-                {% empty %}
-                <li class="li-2">
-                    Cette station ne contient pas de sondes
-                </li>
-                {% endfor %}
-            </ul>
-
-        </li>
-        {% endfor %}
-    </ul>
-{% else %}
-<h4>Stations</h4>
-<p>Sélectionner un terrain</p>
 {% endif %}

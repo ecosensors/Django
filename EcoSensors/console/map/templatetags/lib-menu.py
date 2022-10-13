@@ -4,7 +4,6 @@ from map.models import Fields, Stations, Sensors, Measures, Collections
 register = template.Library()
 
 
-@cache_page(1800)
 @register.simple_tag
 def menuFields():
     """
@@ -14,10 +13,10 @@ def menuFields():
     return fields_list
 
 
-@cache_page(1800)
 @register.simple_tag
 def menuStations(fieldid):
     """
+    THIS IS NOT USED ANYMORE. I KEEP IT AS RECORD (SEE MENU_OLD.HTML)
     Display all active stations according to a selected field
     As a subtree, display all sensors for a station
     """
