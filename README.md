@@ -13,6 +13,17 @@ There are two exercises 1) leaflet and 2) Console. leaflet exercise is done foll
 This installation is done on MacOS
 
 * Make sure you have installed Command Line Developper tools
+* I personally switched my default shell to bash
+
+```
+chsh -s /bin/bash
+```
+and I added the following simple lines
+```
+# nano .bash_profile
+export PS1="\[\033[1;31m\]\u:\[\033[0m\]\w$ "
+alias ll='ls -laG'
+```
 * Make sure you installed Python3
 ```
 python3 --version
