@@ -12,6 +12,7 @@ There are two exercises 1) leaflet and 2) Console. leaflet exercise is done foll
 # Django notes
 This installation is done on MacOS
 
+## Python3
 * Make sure you have installed Command Line Developper tools
 * I personally switched my default shell to bash
 
