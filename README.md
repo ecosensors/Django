@@ -10,6 +10,10 @@ There are two exercises 1) leaflet and 2) Console. leaflet exercise is done foll
 
 
 # Django notes
+This installation is done on MacOS
+
+* Make sure you have installed Command Line Developper tools
+* Make sure you installed Python3
 
 ## Create un environement
 $ python3 -m venv .env
