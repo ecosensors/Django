@@ -18,7 +18,7 @@ This installation is done on MacOS
 ```
 chsh -s /bin/bash
 ```
-and I added the following simple lines
+and I added the following simple lines to .bash_profile
 ```
 # nano .bash_profile
 export PS1="\[\033[1;31m\]\u:\[\033[0m\]\w$ "
