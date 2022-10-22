@@ -40,6 +40,8 @@ Go to your project folder and create an environment
 ```
 cd /my-project/folder
 python3 -m venv .env
+source .env/bin/activate   # Activate your environment
+deactivate                 # Quit your environment
 ```
 
 ## Install django
