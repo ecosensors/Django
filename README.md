@@ -25,13 +25,22 @@ and I added the following simple lines to .bash_profile
 export PS1="\[\033[1;31m\]\u:\[\033[0m\]\w$ "
 alias ll='ls -laG'
 ```
-* Make sure you installed Python3
+* Make sure you installed Python3 and pip3
 ```
 python3 --version
+pip3 -v
 ```
 
-## Create un environement
-$ python3 -m venv .env
+## virtualenv
+Install virtualenv
+```
+pip3 install virtualenv
+```
+Go to your project folder and create an environment
+```
+cd /my-project/folder
+python3 -m venv .env
+```
 
 ## Install django
 * brew install mysq-client
