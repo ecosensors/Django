@@ -14,6 +14,9 @@ This installation is done on MacOS
 
 ## Python3
 * Make sure you have installed Command Line Developper tools
+```
+xcode-select --install
+```
 * I personally switched my default shell to bash
 
 ```
