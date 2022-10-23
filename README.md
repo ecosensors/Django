@@ -33,6 +33,10 @@ alias ll='ls -laG'
 python3 --version
 pip3 -v
 ```
+* Install brew if it is not done
+```
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+```
 
 ## virtualenv
 Install virtualenv
