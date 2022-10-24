@@ -9,8 +9,8 @@ This is a simple exercise to be fanilirized with Django (See DocBlog -> src )
 There are two exercises 1) leaflet and 2) Console. leaflet exercise is done following [this tutorial](https://blog.logrocket.com/how-to-build-vue-js-app-django-rest-framework/), step by step. Then I used this new skills to build the console application with a database which contain a bit less than 1 million of measures. the console exercise is build with some javascript libraries as Leaflet for the map, Chartjs to display the measures. The goal of that exercise is to build a Django app to replace this PHP app ([See](https://bud.eco-sensors.ch/))
 
 
-# Django notes
-This installation is done on MacOS
+# Prepare and install Django
+This installation is done on MacOS Monterey (12.6)
 
 ## Python3
 * Make sure you have installed Command Line Developper tools
