@@ -78,7 +78,6 @@ Uesfull links:
 * [Django & Vuejs (1)](https://www.sitepoint.com/web-app-prototype-django-vue/)
 * [Django & Vuejs (2)](https://blog.logrocket.com/how-to-build-vue-js-app-django-rest-framework/)
 * [Install Django on Mac](https://appdividend.com/2022/06/15/how-to-install-django-in-mac/)
-* [Install Apache on OSX](https://getgrav.org/blog/macos-monterey-apache-multiple-php-versions)
 
 This help to solve some problems
 
