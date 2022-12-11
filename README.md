@@ -31,7 +31,7 @@ alias ll='ls -laG'
 * Make sure you installed Python3 and pip3
 ```
 python3 --version
-pip3 -v
+pip3 -V
 ```
 * Install brew if it is not done
 ```
