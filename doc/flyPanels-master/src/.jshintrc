@@ -1,9 +1,0 @@
-{
-  "curly": true,
-  "eqeqeq": true,
-  "noarg": true,
-  "quotmark": "single",
-  "boss": true,
-  "trailing": true,
-  "browser": true
-}
