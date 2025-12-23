@@ -26,8 +26,9 @@ Before the next steps, I imported a .sql file to the database 'db_console', with
 xcode-select --install
 ```
 
-(On Tahoe, I have not switch the shell)
-* I personally switched my default shell to bash
+> On Tahoe, I have not switch the shell.
+> If you use zsh, bellow replace .bash_profile by .zsh_sessionsl to bash
+
 ```
 chsh -s /bin/bash
 ```
