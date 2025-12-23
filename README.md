@@ -15,7 +15,7 @@ There are two exercises 1) leaflet and 2) Console. leaflet exercise is done foll
 
 
 # Prepare and install Django
-This installation is done on MacOS Monterey (12.6) and then on a MacOS Ventura 13.0.1
+This installation is done on MacOS Monterey (12.6), on a MacOS Ventura 13.0.1 and Tahoe (26.2)
 I use MAMP 6.6 as local server and PHP 7.4.21, MySQL 5.7.34 and PHPMyAdmin 5.1.0.
 
 Before the next steps, I imported a .sql file to the database 'db_console', with a bit less of 1 millions of measures.
@@ -26,6 +26,7 @@ Before the next steps, I imported a .sql file to the database 'db_console', with
 xcode-select --install
 ```
 
+(On Tahoe, I have not switch the shell)
 * I personally switched my default shell to bash
 ```
 chsh -s /bin/bash
@@ -42,11 +43,12 @@ alias ll='ls -laG'
 python3 --version
 pip3 -V
 ```
-* Install brew if it is not done
+* Install brew if it is not done (Replace [user] by your usename)
 ```
 brew --version
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 ```
+At the end of the installation, you will be asked to run three additional command
 
 ## virtualenv
 Install virtualenv
